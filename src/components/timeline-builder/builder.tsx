@@ -112,6 +112,10 @@ export function TimelineBuilder({ existing }: Props) {
     });
   }
 
+  const phasesWithHobbies = phases.filter((p) => p.hobbies.length > 0).length;
+  const totalPhases = phases.length;
+  const allEmpty = phasesWithHobbies === 0;
+
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       {/* Title */}
@@ -122,6 +126,24 @@ export function TimelineBuilder({ existing }: Props) {
           placeholder="Timeline title (optional)"
           className="h-11 border-slate-700 bg-slate-900 text-lg font-medium placeholder:text-slate-600"
         />
+      </div>
+
+      {/* Progress indicator */}
+      <div className="flex items-center gap-3">
+        <span
+          className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
+            allEmpty
+              ? "bg-slate-800 text-slate-500"
+              : "bg-emerald-900/50 text-emerald-400"
+          }`}
+        >
+          {phasesWithHobbies}/{totalPhases} phases have hobbies
+        </span>
+        {allEmpty && (
+          <span className="text-xs text-slate-600">
+            💡 Tip: Add hobbies to each phase to unlock insights
+          </span>
+        )}
       </div>
 
       {/* Phases */}
@@ -135,14 +157,25 @@ export function TimelineBuilder({ existing }: Props) {
           strategy={verticalListSortingStrategy}
         >
           <div className="space-y-3">
-            {phases.map((phase) => (
-              <PhaseCard
-                key={phase.id}
-                phase={phase}
-                onChange={(updated) => updatePhase(phase.id, updated)}
-                onDelete={() => deletePhase(phase.id)}
-                isOnly={phases.length === 1}
-              />
+            {phases.map((phase, index) => (
+              <div key={phase.id}>
+                <PhaseCard
+                  phase={phase}
+                  onChange={(updated) => updatePhase(phase.id, updated)}
+                  onDelete={() => deletePhase(phase.id)}
+                  isOnly={phases.length === 1}
+                />
+                {index === 0 && phases.length > 1 && (
+                  <p
+                    className="mt-1.5 text-center text-xs text-slate-600"
+                    style={{
+                      animation: "fadeOut 0.5s ease 3s forwards",
+                    }}
+                  >
+                    ↕ Drag to reorder
+                  </p>
+                )}
+              </div>
             ))}
           </div>
         </SortableContext>

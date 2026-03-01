@@ -29,6 +29,9 @@ export function PhaseCard({ phase, onChange, onDelete, isOnly }: Props) {
     isDragging,
   } = useSortable({ id: phase.id });
 
+  const hasHobbies = phase.hobbies.length > 0;
+  const dotColor = `hsl(${phase.order * 40 + 160}, 70%, 50%)`;
+
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
@@ -43,7 +46,11 @@ export function PhaseCard({ phase, onChange, onDelete, isOnly }: Props) {
     <div
       ref={setNodeRef}
       style={style}
-      className="rounded-xl border border-slate-700 bg-slate-900"
+      className={`rounded-xl border bg-slate-900 ${
+        hasHobbies
+          ? "border-l-2 border-l-emerald-600 border-slate-700"
+          : "border-slate-700"
+      }`}
     >
       {/* Header */}
       <div className="flex items-center gap-2 px-4 py-3">
@@ -55,6 +62,12 @@ export function PhaseCard({ phase, onChange, onDelete, isOnly }: Props) {
         >
           <GripVertical className="h-4 w-4" />
         </button>
+
+        {/* Colored dot */}
+        <span
+          className="h-2 w-2 shrink-0 rounded-full"
+          style={{ backgroundColor: dotColor }}
+        />
 
         <Input
           value={phase.label}
@@ -158,7 +171,7 @@ export function PhaseCard({ phase, onChange, onDelete, isOnly }: Props) {
           <div className="space-y-1.5">
             <Label className="text-xs text-slate-500">
               Hobbies{" "}
-              <span className="text-slate-600">
+              <span className={hasHobbies ? "text-emerald-500" : "text-slate-600"}>
                 ({phase.hobbies.length})
               </span>
             </Label>
