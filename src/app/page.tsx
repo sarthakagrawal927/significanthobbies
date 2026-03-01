@@ -17,6 +17,24 @@ async function getDemoTimelines() {
   }
 }
 
+const features = [
+  {
+    icon: "🗺️",
+    title: "Map your journey",
+    desc: "Build life phases from childhood to now. Add every hobby, interest, and passion along the way.",
+  },
+  {
+    icon: "💡",
+    title: "Discover insights",
+    desc: "See rekindled hobbies, what stuck across decades, and patterns you never noticed before.",
+  },
+  {
+    icon: "✨",
+    title: "Find what's next",
+    desc: "Get personalized suggestions and browse what others with similar tastes explore.",
+  },
+];
+
 export default async function HomePage() {
   const demos = await getDemoTimelines();
 
@@ -24,11 +42,20 @@ export default async function HomePage() {
     <div className="min-h-screen">
       {/* Hero */}
       <section className="relative overflow-hidden px-4 py-28">
+        {/* Top emerald radial — more dramatic */}
         <div
           className="pointer-events-none absolute inset-0"
           style={{
             background:
-              "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(16,185,129,0.12) 0%, transparent 70%)",
+              "radial-gradient(ellipse 80% 60% at 50% -10%, rgba(16,185,129,0.18) 0%, transparent 70%)",
+          }}
+        />
+        {/* Bottom indigo tint */}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(ellipse 70% 50% at 50% 110%, rgba(99,102,241,0.06) 0%, transparent 70%)",
           }}
         />
         <div className="relative mx-auto max-w-3xl text-center">
@@ -73,24 +100,12 @@ export default async function HomePage() {
       <section className="border-t border-slate-800 px-4 py-16">
         <div className="mx-auto max-w-5xl">
           <div className="grid grid-cols-1 gap-10 sm:grid-cols-3">
-            {[
-              {
-                icon: "🗺️",
-                title: "Map your journey",
-                desc: "Build life phases from childhood to now. Add every hobby, interest, and passion along the way.",
-              },
-              {
-                icon: "💡",
-                title: "Discover insights",
-                desc: "See rekindled hobbies, what stuck across decades, and patterns you never noticed before.",
-              },
-              {
-                icon: "✨",
-                title: "Find what's next",
-                desc: "Get personalized suggestions and browse what others with similar tastes explore.",
-              },
-            ].map((f) => (
-              <div key={f.title} className="text-center">
+            {features.map((f, i) => (
+              <div
+                key={f.title}
+                className="animate-fade-in-up text-center opacity-0"
+                style={{ animationDelay: `${i * 120}ms`, animationFillMode: "forwards" }}
+              >
                 <div className="mb-4 text-4xl">{f.icon}</div>
                 <h3 className="mb-2 font-semibold text-slate-200">{f.title}</h3>
                 <p className="text-sm text-slate-500">{f.desc}</p>
@@ -145,9 +160,20 @@ export default async function HomePage() {
                           @{t.user.username ?? t.user.name}
                         </p>
                       )}
-                      <p className="mb-3 text-xs text-slate-500">
-                        {phases.length} phases · {totalHobbies} hobbies
-                      </p>
+                      {/* Phase count pill strip */}
+                      <div className="mb-3 flex items-center gap-2">
+                        <div className="flex gap-0.5" aria-label={`${phases.length} phases`}>
+                          {Array.from({ length: Math.max(phases.length, 1) }).map((_, idx) => (
+                            <span
+                              key={idx}
+                              className="h-1.5 w-4 rounded-full bg-emerald-700/60 transition-colors group-hover:bg-emerald-600/80"
+                            />
+                          ))}
+                        </div>
+                        <span className="text-xs text-slate-500">
+                          {phases.length} phases · {totalHobbies} hobbies
+                        </span>
+                      </div>
                       <div className="flex flex-wrap gap-1">
                         {phases.slice(0, 3).map((p) => (
                           <Badge
@@ -170,23 +196,32 @@ export default async function HomePage() {
 
       {/* Export CTA */}
       <section className="border-t border-slate-800 px-4 py-16 text-center">
-        <div className="mx-auto max-w-lg">
-          <div className="mb-4 text-5xl">🎨</div>
-          <h2 className="mb-3 text-2xl font-bold text-slate-100">
-            Export a beautiful card
-          </h2>
-          <p className="mb-8 text-slate-400">
-            Generate a shareable image of your hobby journey — designed to
-            stand out.
-          </p>
-          <Link href="/timeline/new">
-            <Button
-              size="lg"
-              className="bg-emerald-600 px-10 text-white hover:bg-emerald-500"
-            >
-              Start for free
-            </Button>
-          </Link>
+        {/* Subtle glow border wrapper */}
+        <div
+          className="mx-auto max-w-lg rounded-2xl p-px"
+          style={{
+            background:
+              "linear-gradient(135deg, rgba(16,185,129,0.25) 0%, rgba(99,102,241,0.15) 50%, rgba(16,185,129,0.08) 100%)",
+          }}
+        >
+          <div className="rounded-2xl bg-slate-950 px-8 py-12">
+            <div className="mb-5 text-6xl">🎨</div>
+            <h2 className="mb-3 text-2xl font-bold text-slate-100">
+              Export a beautiful card
+            </h2>
+            <p className="mb-8 text-slate-400">
+              Generate a shareable image of your hobby journey — designed to
+              stand out.
+            </p>
+            <Link href="/timeline/new">
+              <Button
+                size="lg"
+                className="bg-emerald-600 px-10 text-white shadow-[0_0_20px_rgba(16,185,129,0.35)] ring-1 ring-emerald-500/40 hover:bg-emerald-500 hover:shadow-[0_0_28px_rgba(16,185,129,0.5)] hover:ring-emerald-400/60 transition-shadow"
+              >
+                Start for free
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
     </div>
