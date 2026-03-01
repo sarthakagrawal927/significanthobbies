@@ -9,7 +9,7 @@ import { PhaseSwimlane } from "~/components/timeline-view/phase-swimlane";
 import { InsightsPanel } from "~/components/timeline-view/insights-panel";
 import { ExportButton } from "~/components/timeline-view/export-button";
 import { VisibilityToggle } from "~/components/timeline-view/visibility-toggle";
-import { Pencil, User } from "lucide-react";
+import { ArrowLeft, Pencil, User } from "lucide-react";
 import type { Phase, TimelineData, TimelineVisibility } from "~/lib/types";
 
 interface Props {
@@ -55,8 +55,22 @@ export default async function TimelinePage({ params }: Props) {
     user: raw.user,
   };
 
+  const breadcrumbHref = raw.user?.username ? `/u/${raw.user.username}` : "/";
+  const breadcrumbLabel = raw.user?.username ? `@${raw.user.username}` : "Home";
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-10">
+      {/* Breadcrumb */}
+      <div className="mb-6">
+        <Link
+          href={breadcrumbHref}
+          className="inline-flex items-center gap-1.5 text-sm text-slate-500 hover:text-slate-300 transition-colors"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" />
+          {breadcrumbLabel}
+        </Link>
+      </div>
+
       {/* Header */}
       <div className="mb-8 flex items-start justify-between gap-4 flex-wrap">
         <div>

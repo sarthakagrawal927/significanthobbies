@@ -23,19 +23,37 @@ export function InsightsPanel({ phases }: Props) {
 
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-3">
-        <div className="rounded-lg bg-slate-800/60 p-3 text-center">
+        <div
+          className="rounded-lg p-3 text-center"
+          style={{
+            background: "linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(16,185,129,0.04) 100%)",
+            border: "1px solid rgba(16,185,129,0.15)",
+          }}
+        >
           <div className="text-2xl font-bold text-emerald-400">
             {totalHobbies}
           </div>
           <div className="text-xs text-slate-500 mt-0.5">total hobbies</div>
         </div>
-        <div className="rounded-lg bg-slate-800/60 p-3 text-center">
+        <div
+          className="rounded-lg p-3 text-center"
+          style={{
+            background: "linear-gradient(135deg, rgba(59,130,246,0.12) 0%, rgba(59,130,246,0.04) 100%)",
+            border: "1px solid rgba(59,130,246,0.15)",
+          }}
+        >
           <div className="text-2xl font-bold text-blue-400">
             {rekindled.length}
           </div>
           <div className="text-xs text-slate-500 mt-0.5">rekindled</div>
         </div>
-        <div className="rounded-lg bg-slate-800/60 p-3 text-center">
+        <div
+          className="rounded-lg p-3 text-center"
+          style={{
+            background: "linear-gradient(135deg, rgba(168,85,247,0.12) 0%, rgba(168,85,247,0.04) 100%)",
+            border: "1px solid rgba(168,85,247,0.15)",
+          }}
+        >
           <div className="text-2xl font-bold text-purple-400">
             {topPersistent.length}
           </div>
@@ -69,26 +87,34 @@ export function InsightsPanel({ phases }: Props) {
             ⏳ Most persistent
           </h3>
           <div className="space-y-1.5">
-            {topPersistent.map(({ hobby, count }) => (
-              <div key={hobby} className="flex items-center justify-between">
-                <span className="text-sm text-slate-300 capitalize">{hobby}</span>
-                <div className="flex items-center gap-2">
-                  <div className="flex gap-0.5">
-                    {Array.from({ length: phases.length }).map((_, i) => (
-                      <div
-                        key={i}
-                        className={`h-2 w-4 rounded-sm ${
-                          i < count ? "bg-emerald-500" : "bg-slate-800"
-                        }`}
-                      />
-                    ))}
+            {topPersistent.map(({ hobby, count }) => {
+              const inAllPhases = count === phases.length;
+              return (
+                <div key={hobby} className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm text-slate-300 capitalize">{hobby}</span>
+                    {inAllPhases && (
+                      <span className="text-xs leading-none" title="Present in every phase">⭐</span>
+                    )}
                   </div>
-                  <span className="text-xs text-slate-500">
-                    {count}/{phases.length}
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <div className="flex gap-0.5">
+                      {Array.from({ length: phases.length }).map((_, i) => (
+                        <div
+                          key={i}
+                          className={`h-2 w-4 rounded-sm ${
+                            i < count ? "bg-emerald-500" : "bg-slate-800"
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs text-slate-500">
+                      {count}/{phases.length}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}

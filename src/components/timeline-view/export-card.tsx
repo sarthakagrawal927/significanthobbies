@@ -25,6 +25,7 @@ export function ExportCard({ timeline, exportRef }: Props) {
       style={{
         background: "linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%)",
         fontFamily: "system-ui, -apple-system, sans-serif",
+        boxShadow: "0 0 60px rgba(16,185,129,0.08)",
       }}
     >
       {/* Glow */}
@@ -69,7 +70,7 @@ export function ExportCard({ timeline, exportRef }: Props) {
               style={{ minWidth: 0 }}
             >
               <div
-                className="h-1.5"
+                className="h-2"
                 style={{
                   background: `hsl(${160 - i * (120 / Math.max(phases.length - 1, 1))}, 70%, 50%)`,
                 }}
