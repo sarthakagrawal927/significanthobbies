@@ -10,7 +10,10 @@
       "Bash(/Users/sarthakagrawal/Desktop/significanthobbies/node_modules/.bin/prisma init:*)",
       "Bash(pnpm dlx:*)",
       "Bash(git init:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(pnpm prisma:*)",
+      "Bash(grep Module not found:*)",
+      "Bash(grep:*)"
     ]
   }
 }

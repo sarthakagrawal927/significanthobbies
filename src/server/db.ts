@@ -1,28 +1,17 @@
-import { PrismaClient } from "~/generated/prisma";
+// eslint-disable-next-line @typescript-eslint/no-require-imports
+const { PrismaLibSql } = require("@prisma/adapter-libsql") as typeof import("@prisma/adapter-libsql");
+import { PrismaClient } from "~/generated/prisma/client";
 
 function createPrismaClient() {
   const url = process.env.DATABASE_URL ?? "file:./dev.db";
+  const authToken = process.env.TURSO_AUTH_TOKEN;
 
-  // Turso production path
-  if (url.startsWith("libsql://") || url.startsWith("http")) {
-    // Lazy import to avoid bundling in dev
-    const { PrismaLibSQL } = require("@prisma/adapter-libsql") as typeof import("@prisma/adapter-libsql");
-    const { createClient } = require("@libsql/client") as typeof import("@libsql/client");
-    const libsql = createClient({
-      url,
-      authToken: process.env.TURSO_AUTH_TOKEN,
-    });
-    const adapter = new PrismaLibSQL(libsql);
-    return new PrismaClient({
-      adapter,
-      log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
-    } as ConstructorParameters<typeof PrismaClient>[0]);
-  }
+  const adapter = new PrismaLibSql({ url, authToken });
 
-  // Local SQLite path
   return new PrismaClient({
-    log: process.env.NODE_ENV === "development" ? ["query", "error", "warn"] : ["error"],
-  });
+    adapter,
+    log: process.env.NODE_ENV === "development" ? ["error", "warn"] : ["error"],
+  } as ConstructorParameters<typeof PrismaClient>[0]);
 }
 
 const globalForPrisma = globalThis as unknown as {

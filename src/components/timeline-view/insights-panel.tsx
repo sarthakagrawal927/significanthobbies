@@ -1,0 +1,126 @@
+import { Badge } from "~/components/ui/badge";
+import { computeInsights } from "~/lib/insights";
+import type { Phase } from "~/lib/types";
+
+interface Props {
+  phases: Phase[];
+}
+
+export function InsightsPanel({ phases }: Props) {
+  if (phases.length < 2) return null;
+
+  const insights = computeInsights(phases);
+  const { rekindled, mostPersistent, addedPerPhase, droppedPerPhase } = insights;
+
+  const topPersistent = mostPersistent.filter((h) => h.count >= 2).slice(0, 6);
+  const totalHobbies = new Set(
+    phases.flatMap((p) => p.hobbies.map((h) => h.name.toLowerCase())),
+  ).size;
+
+  return (
+    <div className="rounded-xl border border-slate-800 bg-slate-900 p-5 space-y-5">
+      <h2 className="text-lg font-semibold text-slate-200">Insights</h2>
+
+      {/* Stats row */}
+      <div className="grid grid-cols-3 gap-3">
+        <div className="rounded-lg bg-slate-800/60 p-3 text-center">
+          <div className="text-2xl font-bold text-emerald-400">
+            {totalHobbies}
+          </div>
+          <div className="text-xs text-slate-500 mt-0.5">total hobbies</div>
+        </div>
+        <div className="rounded-lg bg-slate-800/60 p-3 text-center">
+          <div className="text-2xl font-bold text-blue-400">
+            {rekindled.length}
+          </div>
+          <div className="text-xs text-slate-500 mt-0.5">rekindled</div>
+        </div>
+        <div className="rounded-lg bg-slate-800/60 p-3 text-center">
+          <div className="text-2xl font-bold text-purple-400">
+            {topPersistent.length}
+          </div>
+          <div className="text-xs text-slate-500 mt-0.5">persistent</div>
+        </div>
+      </div>
+
+      {/* Rekindled hobbies */}
+      {rekindled.length > 0 && (
+        <div>
+          <h3 className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">
+            🔥 Rekindled hobbies
+          </h3>
+          <div className="flex flex-wrap gap-1.5">
+            {rekindled.map((h) => (
+              <Badge
+                key={h}
+                className="bg-orange-900/30 text-orange-300 border border-orange-800/50 capitalize"
+              >
+                {h}
+              </Badge>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Most persistent */}
+      {topPersistent.length > 0 && (
+        <div>
+          <h3 className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">
+            ⏳ Most persistent
+          </h3>
+          <div className="space-y-1.5">
+            {topPersistent.map(({ hobby, count }) => (
+              <div key={hobby} className="flex items-center justify-between">
+                <span className="text-sm text-slate-300 capitalize">{hobby}</span>
+                <div className="flex items-center gap-2">
+                  <div className="flex gap-0.5">
+                    {Array.from({ length: phases.length }).map((_, i) => (
+                      <div
+                        key={i}
+                        className={`h-2 w-4 rounded-sm ${
+                          i < count ? "bg-emerald-500" : "bg-slate-800"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="text-xs text-slate-500">
+                    {count}/{phases.length}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Flow: added/dropped per phase */}
+      <div>
+        <h3 className="text-xs font-medium text-slate-400 uppercase tracking-wide mb-2">
+          📊 Phase transitions
+        </h3>
+        <div className="space-y-1.5">
+          {phases.slice(1).map((phase, i) => {
+            const added = addedPerPhase[i + 1] ?? [];
+            const dropped = droppedPerPhase[i + 1] ?? [];
+            return (
+              <div
+                key={phase.id}
+                className="flex items-center gap-2 text-xs text-slate-500"
+              >
+                <span className="text-slate-400 min-w-0 flex-1 truncate">
+                  {phase.label}
+                </span>
+                {added.length > 0 && (
+                  <span className="text-emerald-500">+{added.length}</span>
+                )}
+                {dropped.length > 0 && (
+                  <span className="text-red-500">−{dropped.length}</span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
