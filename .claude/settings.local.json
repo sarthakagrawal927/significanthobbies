@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo EXIT: $?:*)",
+      "Bash(cp:*)",
+      "Bash(pnpm add:*)",
+      "Bash(head:*)",
+      "Bash(echo:*)",
+      "Bash(tail:*)",
+      "Bash(/Users/sarthakagrawal/Desktop/significanthobbies/node_modules/.bin/prisma init:*)",
+      "Bash(pnpm dlx:*)",
+      "Bash(git init:*)",
+      "Bash(git:*)"
+    ]
+  }
+}
