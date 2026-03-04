@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { Button } from "~/components/ui/button";
 import type { Phase } from "~/lib/types";
+import { blogPosts } from "~/lib/blog-posts";
 
 /* ─── Types ──────────────────────────────────────────────────────────────────── */
 
@@ -62,6 +63,13 @@ const CARD_BORDER_COLORS = [
   "#EC4899",
   "#8B5CF6",
 ];
+
+const BLOG_CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  Wellbeing: { bg: "bg-emerald-50", text: "text-emerald-700", border: "border-emerald-200" },
+  "Getting Started": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
+  Psychology: { bg: "bg-violet-50", text: "text-violet-700", border: "border-violet-200" },
+  Reflection: { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
+};
 
 /* ─── Hook: Intersection Observer ────────────────────────────────────────────── */
 
@@ -698,6 +706,81 @@ function ExportCTA() {
   );
 }
 
+/* ─── Blog Teaser ─────────────────────────────────────────────────────────────── */
+
+function BlogTeaser() {
+  const teaserPosts = blogPosts.slice(0, 3);
+
+  return (
+    <section className="border-t border-stone-100 px-4 py-16 bg-amber-50/40">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-8 text-center">
+          <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-2">
+            The Hobby Journal
+          </p>
+          <h2 className="text-3xl font-bold text-stone-900">
+            Thoughts on hobbies &amp; identity
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
+          {teaserPosts.map((post) => {
+            const style =
+              BLOG_CATEGORY_COLORS[post.category] ?? {
+                bg: "bg-stone-50",
+                text: "text-stone-600",
+                border: "border-stone-200",
+              };
+
+            return (
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
+                <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-[0_8px_32px_rgba(16,185,129,0.10)]">
+                  {/* Accent bar */}
+                  <div className="mb-4 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-300 transition-transform duration-300 group-hover:scale-x-100" />
+
+                  <div className="mb-3 text-3xl transition-transform duration-300 group-hover:scale-110">
+                    {post.emoji}
+                  </div>
+
+                  <span
+                    className={`mb-2 inline-flex w-fit items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold ${style.bg} ${style.text} ${style.border}`}
+                  >
+                    {post.category}
+                  </span>
+
+                  <h3 className="mb-2 text-sm font-bold leading-snug text-stone-900 transition-colors group-hover:text-emerald-700">
+                    {post.title}
+                  </h3>
+
+                  <p className="line-clamp-2 flex-1 text-xs leading-relaxed text-stone-500">
+                    {post.excerpt}
+                  </p>
+
+                  <div className="mt-3 flex items-center justify-between border-t border-stone-100 pt-3">
+                    <span className="text-xs text-stone-400">{post.readTime} min read</span>
+                    <span className="text-xs font-semibold text-emerald-600 opacity-0 transition-opacity group-hover:opacity-100">
+                      Read →
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        <div className="mt-6 text-center">
+          <Link
+            href="/blog"
+            className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600 transition-all duration-200 hover:gap-2 hover:text-emerald-700"
+          >
+            Read all articles →
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Footer Strip ────────────────────────────────────────────────────────────── */
 
 function FooterStrip() {
@@ -712,6 +795,7 @@ function FooterStrip() {
           <Link href="/timeline/new" className="transition-colors hover:text-stone-700">Start</Link>
           <Link href="/hobbies" className="transition-colors hover:text-stone-700">Explore</Link>
           <Link href="/explore" className="transition-colors hover:text-stone-700">Community</Link>
+          <Link href="/blog" className="transition-colors hover:text-stone-700">Blog</Link>
         </div>
         <div className="text-xs text-stone-400">Made with love for curious people</div>
       </div>
@@ -909,6 +993,9 @@ export function LandingClient({ demos }: LandingClientProps) {
 
       {/* ── Export CTA ────────────────────────────────────────────────────────── */}
       <ExportCTA />
+
+      {/* ── Blog Teaser ───────────────────────────────────────────────────────── */}
+      <BlogTeaser />
 
       {/* ── Footer ────────────────────────────────────────────────────────────── */}
       <FooterStrip />

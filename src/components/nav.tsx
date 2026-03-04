@@ -43,6 +43,15 @@ export async function Nav() {
               Explore
             </Button>
           </Link>
+          <Link href="/blog">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-stone-500 hover:text-stone-700"
+            >
+              Blog
+            </Button>
+          </Link>
 
           {session?.user ? (
             <>
