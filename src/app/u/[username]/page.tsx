@@ -129,7 +129,7 @@ export default async function ProfilePage({ params }: Props) {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12">
       {/* Profile header */}
-      <div className="mb-8 flex items-start gap-5 flex-wrap">
+      <div className="scroll-reveal mb-8 flex items-start gap-5 flex-wrap">
         {/* Avatar with optional owner glow */}
         <div className={isOwner ? "rounded-full p-0.5 bg-gradient-to-br from-emerald-400/40 via-emerald-600/20 to-transparent ring-2 ring-emerald-400/30 shadow-[0_0_18px_2px_rgba(16,185,129,0.15)]" : ""}>
           {user.image ? (
@@ -250,7 +250,7 @@ export default async function ProfilePage({ params }: Props) {
       <div className="space-y-8">
         {/* Hobby cloud */}
         {allHobbies.length > 0 && (
-          <div>
+          <div className="scroll-reveal scroll-reveal-d1">
             <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-stone-500">
               Hobby cloud
             </h2>
@@ -276,7 +276,7 @@ export default async function ProfilePage({ params }: Props) {
 
         {/* Timelines */}
         {timelines.length > 0 ? (
-          <div>
+          <div className="scroll-reveal scroll-reveal-d2">
             <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-stone-500">
               Timelines
             </h2>

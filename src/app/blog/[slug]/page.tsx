@@ -54,7 +54,7 @@ function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <p
                 key={idx}
-                className="mb-5 text-lg leading-relaxed text-stone-700"
+                className="scroll-reveal mb-5 text-lg leading-relaxed text-stone-700"
               >
                 {block.text}
               </p>
@@ -65,7 +65,7 @@ function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
               return (
                 <h2
                   key={idx}
-                  className="mb-4 mt-10 text-2xl font-bold text-stone-900"
+                  className="scroll-reveal-left mb-4 mt-10 text-2xl font-bold text-stone-900"
                 >
                   {block.text}
                 </h2>
@@ -74,7 +74,7 @@ function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <h3
                 key={idx}
-                className="mb-3 mt-8 text-xl font-semibold text-stone-800"
+                className="scroll-reveal-left mb-3 mt-8 text-xl font-semibold text-stone-800"
               >
                 {block.text}
               </h3>
@@ -82,7 +82,7 @@ function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
 
           case "list":
             return (
-              <ul key={idx} className="mb-5 space-y-2">
+              <ul key={idx} className="scroll-reveal mb-5 space-y-2">
                 {block.items.map((item, i) => (
                   <li key={i} className="flex items-start gap-3 text-lg text-stone-700">
                     <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-500" />
@@ -96,7 +96,7 @@ function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <div
                 key={idx}
-                className="my-8 flex gap-4 rounded-xl border border-amber-200 bg-amber-50 px-6 py-5"
+                className="scroll-reveal-scale my-8 flex gap-4 rounded-xl border border-amber-200 bg-amber-50 px-6 py-5"
               >
                 <span className="mt-0.5 shrink-0 text-2xl" role="img" aria-hidden="true">
                   {block.emoji}
@@ -120,7 +120,7 @@ function BlogContent({ blocks }: { blocks: ContentBlock[] }) {
             return (
               <blockquote
                 key={idx}
-                className="my-8 border-l-4 border-emerald-400 py-1 pl-6"
+                className="scroll-reveal-blur my-8 border-l-4 border-emerald-400 py-1 pl-6"
               >
                 <p className="text-lg italic leading-relaxed text-stone-600">
                   &ldquo;{block.text}&rdquo;
@@ -217,7 +217,7 @@ export default async function BlogPostPage({
       >
         <div className="mx-auto max-w-3xl">
           {/* Category + meta row */}
-          <div className="mb-5 flex flex-wrap items-center gap-3">
+          <div className="scroll-reveal mb-5 flex flex-wrap items-center gap-3">
             <span
               className={`inline-flex items-center rounded-full border px-3 py-0.5 text-xs font-semibold ${style.bg} ${style.text} ${style.border}`}
             >
@@ -245,15 +245,15 @@ export default async function BlogPostPage({
           </div>
 
           {/* Emoji */}
-          <div className="mb-6 text-6xl sm:text-7xl">{post.emoji}</div>
+          <div className="scroll-reveal scroll-reveal-d1 mb-6 text-6xl sm:text-7xl">{post.emoji}</div>
 
           {/* Title */}
-          <h1 className="mb-5 text-3xl font-bold leading-tight tracking-tight text-stone-900 sm:text-4xl md:text-5xl">
+          <h1 className="scroll-reveal scroll-reveal-d2 mb-5 text-3xl font-bold leading-tight tracking-tight text-stone-900 sm:text-4xl md:text-5xl">
             {post.title}
           </h1>
 
           {/* Excerpt */}
-          <p className="text-lg leading-relaxed text-stone-500 sm:text-xl">
+          <p className="scroll-reveal scroll-reveal-d3 text-lg leading-relaxed text-stone-500 sm:text-xl">
             {post.excerpt}
           </p>
         </div>
@@ -280,8 +280,10 @@ export default async function BlogPostPage({
             </div>
 
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-              {relatedPosts.map((p) => (
-                <RelatedCard key={p.slug} post={p} />
+              {relatedPosts.map((p, i) => (
+                <div key={p.slug} className={`scroll-reveal-flip scroll-reveal-d${i + 1}`}>
+                  <RelatedCard post={p} />
+                </div>
               ))}
             </div>
           </div>
@@ -293,7 +295,7 @@ export default async function BlogPostPage({
         className="border-t border-stone-100 px-4 py-16"
         style={{ background: "linear-gradient(135deg, #F0FDF4 0%, #FFFBF5 100%)" }}
       >
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="scroll-reveal-scale mx-auto max-w-3xl text-center">
           <div className="mb-3 text-3xl">🗺️</div>
           <h2 className="mb-3 text-2xl font-bold text-stone-900">
             Ready to map your own hobby journey?

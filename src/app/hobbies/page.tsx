@@ -24,7 +24,7 @@ export default function HobbiesPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
-      <div className="mb-10">
+      <div className="scroll-reveal mb-10">
         <h1 className="text-3xl font-bold text-stone-900">Hobby directory</h1>
         <p className="mt-2 text-stone-500">
           Explore hobbies across every category. Click to see community timelines.
@@ -45,7 +45,7 @@ export default function HobbiesPage() {
           return (
             <div
               key={category.name}
-              className={`border-l-2 pl-5 ${borderColor}`}
+              className={`scroll-reveal border-l-2 pl-5 ${borderColor}`}
             >
               <div className="mb-4 flex items-center gap-2">
                 <span className="text-2xl">{category.emoji}</span>

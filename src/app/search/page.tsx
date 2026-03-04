@@ -102,7 +102,7 @@ export default async function SearchPage({ searchParams }: Props) {
 
       <div className="mt-8 space-y-10">
         {/* --- Timelines section --- */}
-        <section>
+        <section className="scroll-reveal">
           <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-stone-500">
             Timelines
             <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-medium text-stone-500">
@@ -143,7 +143,7 @@ export default async function SearchPage({ searchParams }: Props) {
         </section>
 
         {/* --- People section --- */}
-        <section>
+        <section className="scroll-reveal scroll-reveal-d2">
           <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-stone-500">
             People
             <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-medium text-stone-500">
@@ -185,7 +185,7 @@ export default async function SearchPage({ searchParams }: Props) {
         </section>
 
         {/* --- Hobbies section --- */}
-        <section>
+        <section className="scroll-reveal scroll-reveal-d3">
           <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-stone-500">
             Hobbies
             <span className="rounded-full bg-stone-100 px-2 py-0.5 text-xs font-medium text-stone-500">

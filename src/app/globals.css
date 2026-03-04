@@ -212,6 +212,137 @@
   100% { left: 200%; }
 }
 
+/* ─── Scroll-triggered reveal (CSS-only, no JS needed) ───────────────────────── */
+
+@keyframes scrollRevealUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scrollRevealScale {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scrollRevealLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scrollRevealRight {
+  from {
+    opacity: 0;
+    transform: translateX(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes scrollRevealBlur {
+  from {
+    opacity: 0;
+    filter: blur(8px);
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes scrollRevealFlip {
+  from {
+    opacity: 0;
+    transform: perspective(800px) rotateX(10deg) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: perspective(800px) rotateX(0) translateY(0);
+  }
+}
+
+/* Base class — elements start invisible, animate when entering viewport */
+.scroll-reveal {
+  animation: scrollRevealUp 0.7s ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+.scroll-reveal-scale {
+  animation: scrollRevealScale 0.6s ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+.scroll-reveal-left {
+  animation: scrollRevealLeft 0.7s ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+.scroll-reveal-right {
+  animation: scrollRevealRight 0.7s ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+.scroll-reveal-blur {
+  animation: scrollRevealBlur 0.8s ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 35%;
+}
+
+.scroll-reveal-flip {
+  animation: scrollRevealFlip 0.7s ease-out both;
+  animation-timeline: view();
+  animation-range: entry 0% entry 30%;
+}
+
+/* Stagger delays for children */
+.scroll-reveal-d1 { animation-delay: 80ms; }
+.scroll-reveal-d2 { animation-delay: 160ms; }
+.scroll-reveal-d3 { animation-delay: 240ms; }
+.scroll-reveal-d4 { animation-delay: 320ms; }
+.scroll-reveal-d5 { animation-delay: 400ms; }
+.scroll-reveal-d6 { animation-delay: 480ms; }
+
+/* Fallback for browsers that don't support animation-timeline: view() */
+@supports not (animation-timeline: view()) {
+  .scroll-reveal,
+  .scroll-reveal-scale,
+  .scroll-reveal-left,
+  .scroll-reveal-right,
+  .scroll-reveal-blur,
+  .scroll-reveal-flip {
+    /* These will be handled by the ScrollReveal client component fallback */
+    animation: none;
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+
 /* ─── Utility animation classes ──────────────────────────────────────────────── */
 
 .animate-float {

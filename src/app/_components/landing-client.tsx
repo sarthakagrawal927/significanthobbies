@@ -710,11 +710,15 @@ function ExportCTA() {
 
 function BlogTeaser() {
   const teaserPosts = blogPosts.slice(0, 3);
+  const { ref, inView } = useInView(0.1);
 
   return (
-    <section className="border-t border-stone-100 px-4 py-16 bg-amber-50/40">
+    <section ref={ref} className="border-t border-stone-100 px-4 py-16 bg-amber-50/40">
       <div className="mx-auto max-w-5xl">
-        <div className="mb-8 text-center">
+        <div
+          className="mb-8 text-center"
+          style={inView ? { animation: "fadeInUp 0.6s ease-out both" } : { opacity: 0 }}
+        >
           <p className="text-xs font-semibold uppercase tracking-widest text-emerald-600 mb-2">
             The Hobby Journal
           </p>
@@ -724,7 +728,7 @@ function BlogTeaser() {
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-3">
-          {teaserPosts.map((post) => {
+          {teaserPosts.map((post, idx) => {
             const style =
               BLOG_CATEGORY_COLORS[post.category] ?? {
                 bg: "bg-stone-50",
@@ -733,7 +737,9 @@ function BlogTeaser() {
               };
 
             return (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="group block">
+              <Link key={post.slug} href={`/blog/${post.slug}`} className="group block"
+                style={inView ? { animation: `cardReveal 0.6s ${idx * 0.12}s ease-out both` } : { opacity: 0 }}
+              >
                 <div className="flex h-full flex-col overflow-hidden rounded-2xl border border-stone-200 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-[0_8px_32px_rgba(16,185,129,0.10)]">
                   {/* Accent bar */}
                   <div className="mb-4 h-0.5 origin-left scale-x-0 rounded-full bg-gradient-to-r from-emerald-400 to-emerald-300 transition-transform duration-300 group-hover:scale-x-100" />
@@ -768,7 +774,10 @@ function BlogTeaser() {
           })}
         </div>
 
-        <div className="mt-6 text-center">
+        <div
+          className="mt-6 text-center"
+          style={inView ? { animation: "fadeInUp 0.6s 0.4s ease-out both" } : { opacity: 0 }}
+        >
           <Link
             href="/blog"
             className="inline-flex items-center gap-1.5 text-sm font-semibold text-emerald-600 transition-all duration-200 hover:gap-2 hover:text-emerald-700"

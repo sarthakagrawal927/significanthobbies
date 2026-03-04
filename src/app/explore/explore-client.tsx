@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { Search, LayoutList } from "lucide-react";
 import { Input } from "~/components/ui/input";
+import { ScrollReveal } from "~/components/scroll-reveal";
 import type { TimelineData } from "~/lib/types";
 
 // Phase strip colors cycling through warm/cool hues
@@ -197,8 +198,10 @@ export function ExploreClient({ timelines }: ExploreClientProps) {
             {query && ` for "${query}"`}
           </p>
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {filtered.map((timeline) => (
-              <ExploreTimelineCard key={timeline.id} timeline={timeline} />
+            {filtered.map((timeline, i) => (
+              <ScrollReveal key={timeline.id} animation="fade-up" delay={i * 60} duration={450}>
+                <ExploreTimelineCard timeline={timeline} />
+              </ScrollReveal>
             ))}
           </div>
         </>

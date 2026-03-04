@@ -148,21 +148,21 @@ export default function BlogPage() {
         </div>
 
         <div className="relative mx-auto max-w-5xl text-center">
-          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-700">
+          <div className="scroll-reveal mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-700">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             The Hobby Journal
           </div>
 
-          <h1 className="mb-4 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl md:text-6xl">
+          <h1 className="scroll-reveal scroll-reveal-d1 mb-4 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl md:text-6xl">
             The Hobby Journal
           </h1>
 
-          <p className="mx-auto max-w-xl text-lg text-stone-500 sm:text-xl">
+          <p className="scroll-reveal scroll-reveal-d2 mx-auto max-w-xl text-lg text-stone-500 sm:text-xl">
             Thoughts on hobbies, identity, and living curiously.
           </p>
 
           {/* Decorative dots */}
-          <div className="mt-8 flex justify-center gap-1.5">
+          <div className="scroll-reveal scroll-reveal-d3 mt-8 flex justify-center gap-1.5">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
@@ -179,7 +179,7 @@ export default function BlogPage() {
         <div className="mx-auto max-w-5xl">
           {/* Featured post */}
           {featured && (
-            <div className="mb-10">
+            <div className="scroll-reveal-blur mb-10">
               <p className="mb-4 text-xs font-semibold uppercase tracking-widest text-stone-400">
                 Featured
               </p>
@@ -188,7 +188,7 @@ export default function BlogPage() {
           )}
 
           {/* Divider */}
-          <div className="mb-10 flex items-center gap-4">
+          <div className="scroll-reveal mb-10 flex items-center gap-4">
             <div className="h-px flex-1 bg-stone-200" />
             <p className="text-xs font-semibold uppercase tracking-widest text-stone-400">
               All articles
@@ -199,8 +199,10 @@ export default function BlogPage() {
           {/* Rest of posts grid */}
           {rest.length > 0 && (
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-              {rest.map((post) => (
-                <PostCard key={post.slug} post={post} />
+              {rest.map((post, i) => (
+                <div key={post.slug} className={`scroll-reveal-flip scroll-reveal-d${Math.min(i + 1, 6)}`}>
+                  <PostCard post={post} />
+                </div>
               ))}
             </div>
           )}
@@ -209,7 +211,7 @@ export default function BlogPage() {
 
       {/* Back to site */}
       <section className="border-t border-stone-100 px-4 py-10">
-        <div className="mx-auto max-w-5xl text-center">
+        <div className="scroll-reveal-scale mx-auto max-w-5xl text-center">
           <p className="mb-3 text-sm text-stone-500">
             Ready to map your own hobby story?
           </p>
