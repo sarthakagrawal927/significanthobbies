@@ -9,14 +9,14 @@ export default function NewTimelinePage() {
       <div className="mb-8">
         <Link
           href="/"
-          className="mb-4 inline-flex items-center text-sm text-slate-500 hover:text-slate-300 transition-colors"
+          className="mb-4 inline-flex items-center text-sm text-stone-500 hover:text-stone-700 transition-colors"
         >
           ← Back
         </Link>
-        <h1 className="text-2xl font-bold text-slate-100">
+        <h1 className="text-2xl font-bold text-stone-900">
           Build your hobby timeline
         </h1>
-        <p className="mt-1 text-slate-500">
+        <p className="mt-1 text-stone-500">
           Add life phases and the hobbies that defined each one.
         </p>
       </div>

@@ -15,11 +15,11 @@ export async function Nav() {
   const session = await getServerAuthSession();
 
   return (
-    <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/80 backdrop-blur-sm">
+    <nav className="sticky top-0 z-50 border-b border-stone-200 bg-white/80 backdrop-blur-sm">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
         <Link
           href="/"
-          className="text-lg font-semibold tracking-tight text-emerald-400 hover:text-emerald-300 transition-colors"
+          className="text-lg font-semibold tracking-tight text-emerald-600 hover:text-emerald-700 transition-colors"
         >
           SignificantHobbies
         </Link>
@@ -29,7 +29,7 @@ export async function Nav() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-slate-400 hover:text-slate-200"
+              className="text-stone-500 hover:text-stone-700"
             >
               Discover
             </Button>
@@ -38,7 +38,7 @@ export async function Nav() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-slate-400 hover:text-slate-200"
+              className="text-stone-500 hover:text-stone-700"
             >
               Explore
             </Button>
@@ -49,7 +49,7 @@ export async function Nav() {
               <Link href="/timeline/new">
                 <Button
                   size="sm"
-                  className="bg-emerald-600 hover:bg-emerald-500 text-white"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white"
                 >
                   New Timeline
                 </Button>
@@ -59,7 +59,7 @@ export async function Nav() {
                   <button className="rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
                     <Avatar className="h-8 w-8">
                       <AvatarImage src={session.user.image ?? ""} />
-                      <AvatarFallback className="bg-emerald-900 text-emerald-300 text-sm">
+                      <AvatarFallback className="bg-emerald-100 text-emerald-700 text-sm">
                         {session.user.name?.[0] ?? "U"}
                       </AvatarFallback>
                     </Avatar>
@@ -67,7 +67,7 @@ export async function Nav() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
                   align="end"
-                  className="w-48 border-slate-700 bg-slate-900"
+                  className="w-48 border-stone-200 bg-white"
                 >
                   {session.user.username ? (
                     <DropdownMenuItem asChild>
@@ -77,12 +77,12 @@ export async function Nav() {
                     </DropdownMenuItem>
                   ) : (
                     <DropdownMenuItem asChild>
-                      <Link href="/setup" className="text-yellow-400">
+                      <Link href="/setup" className="text-yellow-600">
                         Set username →
                       </Link>
                     </DropdownMenuItem>
                   )}
-                  <DropdownMenuSeparator className="bg-slate-700" />
+                  <DropdownMenuSeparator className="bg-stone-200" />
                   <NavSignOut />
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -92,7 +92,7 @@ export async function Nav() {
               <Button
                 size="sm"
                 variant="outline"
-                className="border-slate-700 text-slate-300 hover:text-white"
+                className="border-stone-300 text-stone-600 hover:text-stone-900"
               >
                 Sign in
               </Button>

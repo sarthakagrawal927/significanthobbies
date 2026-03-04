@@ -124,7 +124,7 @@ export function TimelineBuilder({ existing }: Props) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder="Timeline title (optional)"
-          className="h-11 border-slate-700 bg-slate-900 text-lg font-medium placeholder:text-slate-600"
+          className="h-11 border-stone-300 bg-white text-lg font-medium placeholder:text-stone-400"
         />
       </div>
 
@@ -133,15 +133,15 @@ export function TimelineBuilder({ existing }: Props) {
         <span
           className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${
             allEmpty
-              ? "bg-slate-800 text-slate-500"
-              : "bg-emerald-900/50 text-emerald-400"
+              ? "bg-stone-100 text-stone-500"
+              : "bg-emerald-100 text-emerald-700"
           }`}
         >
           {phasesWithHobbies}/{totalPhases} phases have hobbies
         </span>
         {allEmpty && (
-          <span className="text-xs text-slate-600">
-            💡 Tip: Add hobbies to each phase to unlock insights
+          <span className="text-xs text-stone-400">
+            Tip: Add hobbies to each phase to unlock insights
           </span>
         )}
       </div>
@@ -167,12 +167,12 @@ export function TimelineBuilder({ existing }: Props) {
                 />
                 {index === 0 && phases.length > 1 && (
                   <p
-                    className="mt-1.5 text-center text-xs text-slate-600"
+                    className="mt-1.5 text-center text-xs text-stone-400"
                     style={{
                       animation: "fadeOut 0.5s ease 3s forwards",
                     }}
                   >
-                    ↕ Drag to reorder
+                    Drag to reorder
                   </p>
                 )}
               </div>
@@ -186,7 +186,7 @@ export function TimelineBuilder({ existing }: Props) {
         <Button
           type="button"
           variant="outline"
-          className="border-slate-700 text-slate-400 hover:text-slate-200"
+          className="border-stone-300 text-stone-600 hover:text-stone-900"
           onClick={addPhase}
         >
           <Plus className="mr-1.5 h-4 w-4" />
@@ -196,7 +196,7 @@ export function TimelineBuilder({ existing }: Props) {
         <Button
           onClick={handleSave}
           disabled={isPending}
-          className="bg-emerald-600 px-6 text-white hover:bg-emerald-500"
+          className="bg-emerald-600 px-6 text-white hover:bg-emerald-700"
         >
           {isPending ? (
             <Loader2 className="mr-2 h-4 w-4 animate-spin" />

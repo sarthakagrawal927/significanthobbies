@@ -6,16 +6,16 @@ export const metadata = { title: "Hobby Directory — SignificantHobbies" };
 
 // Left-border accent colors cycling through hues per category index
 const CATEGORY_BORDER_COLORS = [
-  "border-l-emerald-600",
-  "border-l-blue-600",
-  "border-l-purple-600",
-  "border-l-orange-600",
-  "border-l-pink-600",
-  "border-l-teal-600",
-  "border-l-amber-600",
-  "border-l-violet-600",
-  "border-l-sky-600",
-  "border-l-rose-600",
+  "border-l-emerald-500",
+  "border-l-blue-500",
+  "border-l-purple-500",
+  "border-l-orange-500",
+  "border-l-pink-500",
+  "border-l-teal-500",
+  "border-l-amber-500",
+  "border-l-violet-500",
+  "border-l-sky-500",
+  "border-l-rose-500",
 ];
 
 export default function HobbiesPage() {
@@ -25,17 +25,17 @@ export default function HobbiesPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-slate-100">Hobby directory</h1>
-        <p className="mt-2 text-slate-500">
+        <h1 className="text-3xl font-bold text-stone-900">Hobby directory</h1>
+        <p className="mt-2 text-stone-500">
           Explore hobbies across every category. Click to see community timelines.
         </p>
         {/* Summary counts */}
-        <p className="mt-3 text-sm font-medium text-slate-400">
-          <span className="text-slate-200">{totalCategories}</span>
-          <span className="text-slate-500"> categories</span>
-          <span className="mx-2 text-slate-600">·</span>
-          <span className="text-slate-200">{totalHobbies}</span>
-          <span className="text-slate-500"> hobbies</span>
+        <p className="mt-3 text-sm font-medium text-stone-500">
+          <span className="text-stone-800">{totalCategories}</span>
+          <span className="text-stone-400"> categories</span>
+          <span className="mx-2 text-stone-300">·</span>
+          <span className="text-stone-800">{totalHobbies}</span>
+          <span className="text-stone-400"> hobbies</span>
         </p>
       </div>
 
@@ -49,12 +49,12 @@ export default function HobbiesPage() {
             >
               <div className="mb-4 flex items-center gap-2">
                 <span className="text-2xl">{category.emoji}</span>
-                <h2 className="text-xl font-semibold text-slate-200">
+                <h2 className="text-xl font-semibold text-stone-800">
                   {category.name}
                 </h2>
                 <Badge
                   variant="outline"
-                  className="border-slate-700 text-xs text-slate-600"
+                  className="border-stone-200 text-xs text-stone-400"
                 >
                   {category.hobbies.length}
                 </Badge>
@@ -66,7 +66,7 @@ export default function HobbiesPage() {
                     href={`/hobbies/${encodeURIComponent(hobby.toLowerCase().replace(/\s+/g, "-"))}`}
                     title={`${category.emoji} ${category.name}`}
                   >
-                    <span className="inline-block rounded-full border border-slate-700 bg-slate-900 px-4 py-1.5 text-sm text-slate-300 transition-colors hover:border-emerald-700 hover:text-emerald-300 cursor-pointer">
+                    <span className="inline-block rounded-full border border-stone-200 bg-white px-4 py-1.5 text-sm text-stone-600 transition-colors hover:border-emerald-400 hover:text-emerald-600 cursor-pointer">
                       {hobby}
                     </span>
                   </Link>

@@ -15,7 +15,7 @@ const UsernameSchema = z
     "Lowercase letters, numbers, and hyphens only",
   );
 
-export async function setUsername(username: string) {
+export async function setUsername(username: string, birthYear?: number) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.id) throw new Error("Not authenticated");
 
@@ -30,7 +30,7 @@ export async function setUsername(username: string) {
 
   const user = await db.user.update({
     where: { id: session.user.id },
-    data: { username: parsed },
+    data: { username: parsed, ...(birthYear ? { birthYear } : {}) },
   });
   revalidatePath(`/u/${parsed}`);
   return user;

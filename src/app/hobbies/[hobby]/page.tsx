@@ -73,13 +73,13 @@ export default async function HobbyDetailPage({ params }: Props) {
     <div className="mx-auto max-w-4xl px-4 py-12">
       {/* Guest CTA banner */}
       {!isLoggedIn && (
-        <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-emerald-800/50 bg-emerald-950/30 px-5 py-3">
-          <p className="text-sm text-slate-300">
-            Track your <span className="font-semibold text-emerald-300">{hobbyName}</span> journey
+        <div className="mb-6 flex items-center justify-between gap-4 rounded-xl border border-emerald-300 bg-emerald-50 px-5 py-3">
+          <p className="text-sm text-stone-700">
+            Track your <span className="font-semibold text-emerald-600">{hobbyName}</span> journey
           </p>
           <Link
             href="/timeline/new"
-            className="shrink-0 text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+            className="shrink-0 text-sm font-medium text-emerald-600 hover:text-emerald-700 transition-colors"
           >
             Start now →
           </Link>
@@ -90,7 +90,7 @@ export default async function HobbyDetailPage({ params }: Props) {
       <div className="mb-2">
         <Link
           href="/hobbies"
-          className="text-sm text-slate-500 hover:text-slate-300"
+          className="text-sm text-stone-500 hover:text-stone-700"
         >
           ← All hobbies
         </Link>
@@ -98,23 +98,23 @@ export default async function HobbyDetailPage({ params }: Props) {
       <div className="mb-8 flex items-center gap-3">
         <span className="text-4xl">{category.emoji}</span>
         <div>
-          <h1 className="text-3xl font-bold text-slate-100">{hobbyName}</h1>
-          <p className="text-slate-500 text-sm">{category.name}</p>
+          <h1 className="text-3xl font-bold text-stone-900">{hobbyName}</h1>
+          <p className="text-stone-500 text-sm">{category.name}</p>
         </div>
       </div>
 
       {/* Popularity */}
       <div className="mb-8 flex items-center gap-3">
-        <div className="rounded-xl border border-slate-800 bg-slate-900/60 px-5 py-3 flex items-center gap-3">
-          <span className="text-2xl font-bold text-emerald-400">{popularityCount}</span>
-          <span className="text-sm text-slate-400">
+        <div className="rounded-xl border border-stone-200 bg-white px-5 py-3 flex items-center gap-3">
+          <span className="text-2xl font-bold text-emerald-600">{popularityCount}</span>
+          <span className="text-sm text-stone-600">
             {popularityCount === 1
               ? "public timeline features this hobby"
               : popularityCount === 0
               ? (
                 <span>
                   public timelines yet —{" "}
-                  <Link href="/timeline/new" className="text-emerald-400 hover:text-emerald-300 transition-colors">
+                  <Link href="/timeline/new" className="text-emerald-600 hover:text-emerald-700 transition-colors">
                     be the first!
                   </Link>
                 </span>
@@ -126,7 +126,7 @@ export default async function HobbyDetailPage({ params }: Props) {
 
       {/* Community timelines */}
       <div className="mb-12">
-        <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-slate-500">
+        <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-stone-500">
           Community timelines featuring {hobbyName}
         </h2>
         {matchingTimelines.length > 0 ? (
@@ -141,16 +141,16 @@ export default async function HobbyDetailPage({ params }: Props) {
               ).size;
               return (
                 <Link key={t.id} href={`/timeline/${t.id}`}>
-                  <div className="group rounded-xl border border-slate-800 bg-slate-900/60 p-4 transition-colors hover:border-emerald-800">
-                    <h3 className="font-medium text-slate-200 group-hover:text-emerald-300 transition-colors">
+                  <div className="group rounded-xl border border-stone-200 bg-white p-4 transition-colors hover:border-emerald-400">
+                    <h3 className="font-medium text-stone-800 group-hover:text-emerald-600 transition-colors">
                       {t.title ?? "Hobby Timeline"}
                     </h3>
                     {t.user && (
-                      <p className="text-xs text-slate-500 mt-0.5">
+                      <p className="text-xs text-stone-500 mt-0.5">
                         @{t.user.username ?? t.user.name}
                       </p>
                     )}
-                    <p className="text-xs text-slate-600 mt-1.5">
+                    <p className="text-xs text-stone-400 mt-1.5">
                       {phases.length} phases · {totalHobbies} hobbies
                     </p>
                   </div>
@@ -159,12 +159,12 @@ export default async function HobbyDetailPage({ params }: Props) {
             })}
           </div>
         ) : (
-          <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-8 text-center">
-            <p className="text-slate-500">
+          <div className="rounded-xl border border-stone-200 bg-stone-50 p-8 text-center">
+            <p className="text-stone-500">
               No public timelines feature {hobbyName} yet.
             </p>
             <Link href="/timeline/new">
-              <button className="mt-3 text-sm text-emerald-400 hover:text-emerald-300">
+              <button className="mt-3 text-sm text-emerald-600 hover:text-emerald-700">
                 Be the first →
               </button>
             </Link>
@@ -175,7 +175,7 @@ export default async function HobbyDetailPage({ params }: Props) {
       {/* Related hobbies in same category */}
       {otherHobbies.length > 0 && (
         <div>
-          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-slate-500">
+          <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-stone-500">
             {category.emoji} Other {category.name.toLowerCase()} hobbies
           </h2>
           <div className="flex flex-wrap gap-2">
@@ -186,7 +186,7 @@ export default async function HobbyDetailPage({ params }: Props) {
               >
                 <Badge
                   variant="outline"
-                  className="border-slate-700 text-slate-400 hover:border-emerald-700 hover:text-emerald-300 cursor-pointer transition-colors"
+                  className="border-stone-200 text-stone-500 hover:border-emerald-400 hover:text-emerald-600 cursor-pointer transition-colors"
                 >
                   {category.emoji} {h}
                 </Badge>

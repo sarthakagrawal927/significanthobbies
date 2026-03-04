@@ -42,7 +42,7 @@ export function ExportButton({ timeline }: Props) {
         onClick={handleExport}
         disabled={isExporting}
         variant="outline"
-        className="border-slate-700 text-slate-300 hover:text-white"
+        className="border-stone-300 text-stone-600 hover:text-stone-900"
       >
         {isExporting ? (
           <Loader2 className="mr-2 h-4 w-4 animate-spin" />

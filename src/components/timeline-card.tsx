@@ -24,14 +24,14 @@ export function TimelineCard({ timeline, showVisibility = false }: Props) {
 
   return (
     <Link href={`/timeline/${timeline.id}`}>
-      <div className="group rounded-xl border border-slate-800 bg-slate-900/60 p-5 transition-colors hover:border-emerald-800 hover:bg-slate-900">
+      <div className="group rounded-xl border border-stone-200 bg-white p-5 transition-colors hover:border-emerald-400 hover:bg-stone-50">
         {/* Title row */}
         <div className="mb-3 flex items-start justify-between gap-2">
-          <h3 className="font-medium text-slate-200 group-hover:text-emerald-300 transition-colors leading-tight">
+          <h3 className="font-medium text-stone-800 group-hover:text-emerald-600 transition-colors leading-tight">
             {timeline.title ?? "Hobby Timeline"}
           </h3>
           {showVisibility && (
-            <VisIcon className="h-3.5 w-3.5 text-slate-600 shrink-0 mt-0.5" />
+            <VisIcon className="h-3.5 w-3.5 text-stone-400 shrink-0 mt-0.5" />
           )}
         </div>
 
@@ -41,7 +41,7 @@ export function TimelineCard({ timeline, showVisibility = false }: Props) {
             <Badge
               key={p.id}
               variant="outline"
-              className="border-slate-700 text-xs text-slate-500 py-0"
+              className="border-stone-200 text-xs text-stone-500 py-0"
             >
               {p.label}
             </Badge>
@@ -49,7 +49,7 @@ export function TimelineCard({ timeline, showVisibility = false }: Props) {
           {phases.length > 4 && (
             <Badge
               variant="outline"
-              className="border-slate-700 text-xs text-slate-600 py-0"
+              className="border-stone-200 text-xs text-stone-400 py-0"
             >
               +{phases.length - 4}
             </Badge>
@@ -57,7 +57,7 @@ export function TimelineCard({ timeline, showVisibility = false }: Props) {
         </div>
 
         {/* Stats */}
-        <p className="text-xs text-slate-600">
+        <p className="text-xs text-stone-400">
           {phases.length} phases · {totalHobbies} hobbies
         </p>
       </div>

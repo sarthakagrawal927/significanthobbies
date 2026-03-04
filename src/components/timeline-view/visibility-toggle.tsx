@@ -70,7 +70,7 @@ export function VisibilityToggle({ timelineId, current }: Props) {
         <Button
           variant="outline"
           size="sm"
-          className="border-slate-700 text-slate-300 hover:text-white gap-1.5"
+          className="border-stone-300 text-stone-600 hover:text-stone-900 gap-1.5"
           disabled={isPending}
         >
           {isPending ? (
@@ -83,7 +83,7 @@ export function VisibilityToggle({ timelineId, current }: Props) {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="end"
-        className="bg-slate-900 border-slate-700"
+        className="bg-white border-stone-200"
       >
         {OPTIONS.map((opt) => {
           const OptIcon = opt.icon;
@@ -91,12 +91,12 @@ export function VisibilityToggle({ timelineId, current }: Props) {
             <DropdownMenuItem
               key={opt.value}
               onClick={() => handleChange(opt.value)}
-              className="flex items-start gap-3 py-2 cursor-pointer hover:bg-slate-800 focus:bg-slate-800"
+              className="flex items-start gap-3 py-2 cursor-pointer hover:bg-stone-100 focus:bg-stone-100"
             >
-              <OptIcon className="h-4 w-4 mt-0.5 text-slate-400 shrink-0" />
+              <OptIcon className="h-4 w-4 mt-0.5 text-stone-500 shrink-0" />
               <div>
-                <div className="text-sm text-slate-200">{opt.label}</div>
-                <div className="text-xs text-slate-500">{opt.desc}</div>
+                <div className="text-sm text-stone-800">{opt.label}</div>
+                <div className="text-xs text-stone-500">{opt.desc}</div>
               </div>
             </DropdownMenuItem>
           );

@@ -49,6 +49,7 @@ model User {
   emailVerified DateTime?
   image         String?
   username      String?    @unique
+  birthYear     Int?
   createdAt     DateTime   @default(now())
   accounts      Account[]
   sessions      Session[]

@@ -31,12 +31,12 @@ export function UsernameForm() {
   }
 
   return (
-    <Card className="border-slate-800 bg-slate-900">
+    <Card className="border-stone-200 bg-white">
       <CardContent className="pt-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <div className="flex items-center rounded-md border border-slate-700 bg-slate-800 px-3 focus-within:border-emerald-500 transition-colors">
-              <span className="text-slate-500 text-sm select-none">@</span>
+            <div className="flex items-center rounded-md border border-stone-300 bg-stone-50 px-3 focus-within:border-emerald-500 transition-colors">
+              <span className="text-stone-400 text-sm select-none">@</span>
               <Input
                 value={value}
                 onChange={(e) =>
@@ -51,13 +51,13 @@ export function UsernameForm() {
                 required
               />
             </div>
-            <p className="mt-1.5 text-xs text-slate-500">
+            <p className="mt-1.5 text-xs text-stone-400">
               Lowercase letters, numbers, hyphens only
             </p>
           </div>
           <Button
             type="submit"
-            className="w-full bg-emerald-600 hover:bg-emerald-500"
+            className="w-full bg-emerald-600 hover:bg-emerald-700"
             disabled={loading || !isValid}
           >
             {loading ? "Saving..." : "Claim username"}

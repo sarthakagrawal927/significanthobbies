@@ -43,8 +43,8 @@ export default async function EditTimelinePage({ params }: Props) {
   return (
     <div className="mx-auto max-w-3xl px-4 py-12">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-slate-100">Edit timeline</h1>
-        <p className="mt-1 text-slate-500">
+        <h1 className="text-2xl font-bold text-stone-900">Edit timeline</h1>
+        <p className="mt-1 text-stone-500">
           Update phases and hobbies, then save.
         </p>
       </div>

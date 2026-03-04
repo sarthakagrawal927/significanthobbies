@@ -43,15 +43,15 @@ export default async function MyTimelinesPage() {
       {/* Page header */}
       <div className="mb-8 flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-100">My Timelines</h1>
-          <p className="mt-1 text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-stone-900">My Timelines</h1>
+          <p className="mt-1 text-sm text-stone-500">
             {timelines.length > 0
               ? `${timelines.length} timeline${timelines.length === 1 ? "" : "s"}`
               : "Track your hobbies across life phases"}
           </p>
         </div>
         <Link href="/timeline/new">
-          <Button className="bg-emerald-600 hover:bg-emerald-500 text-white">
+          <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
             <Plus className="mr-1.5 h-4 w-4" />
             New Timeline
           </Button>
@@ -60,19 +60,19 @@ export default async function MyTimelinesPage() {
 
       {timelines.length === 0 ? (
         /* Empty state */
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-slate-800 bg-slate-900/50 px-6 py-20 text-center">
-          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-slate-700 bg-slate-800">
-            <LayoutList className="h-6 w-6 text-slate-500" />
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-stone-200 bg-stone-50 px-6 py-20 text-center">
+          <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full border border-stone-200 bg-stone-100">
+            <LayoutList className="h-6 w-6 text-stone-400" />
           </div>
-          <h2 className="mb-2 text-lg font-semibold text-slate-200">
+          <h2 className="mb-2 text-lg font-semibold text-stone-800">
             No timelines yet
           </h2>
-          <p className="mb-7 max-w-xs text-sm text-slate-500">
+          <p className="mb-7 max-w-xs text-sm text-stone-500">
             Create your first timeline to start mapping the hobbies that defined
             each chapter of your life.
           </p>
           <Link href="/timeline/new">
-            <Button className="bg-emerald-600 hover:bg-emerald-500 text-white">
+            <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
               <Plus className="mr-1.5 h-4 w-4" />
               Build your first timeline
             </Button>

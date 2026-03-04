@@ -7,13 +7,16 @@
       "Bash(head:*)",
       "Bash(echo:*)",
       "Bash(tail:*)",
-      "Bash(/Users/sarthakagrawal/Desktop/significanthobbies/node_modules/.bin/prisma init:*)",
       "Bash(pnpm dlx:*)",
-      "Bash(git init:*)",
       "Bash(git:*)",
       "Bash(pnpm prisma:*)",
-      "Bash(grep Module not found:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(openssl rand:*)",
+      "Bash(vercel:*)",
+      "Bash(turso auth:*)",
+      "Bash(turso db:*)",
+      "Bash(pnpm exec tsc --noEmit 2>&1 | head -60)",
+      "Bash(pnpm build 2>&1 | tail -40)"
     ]
   }
 }

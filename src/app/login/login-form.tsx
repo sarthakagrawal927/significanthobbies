@@ -14,12 +14,12 @@ export function LoginForm() {
   }
 
   return (
-    <Card className="border-slate-800 bg-slate-900">
+    <Card className="border-stone-200 bg-white">
       <CardContent className="pt-6">
         <Button
           onClick={handleGoogle}
           disabled={loading}
-          className="w-full bg-white hover:bg-gray-100 text-gray-900 font-medium"
+          className="w-full bg-white hover:bg-stone-50 text-stone-900 font-medium border border-stone-300"
           size="lg"
         >
           <svg

@@ -21,16 +21,16 @@ export async function generateMetadata({ params }: Props) {
 }
 
 const CATEGORY_BADGE_COLORS: Record<string, string> = {
-  Creative: "border-purple-700/60 bg-purple-900/30 text-purple-300",
-  Music: "border-pink-700/60 bg-pink-900/30 text-pink-300",
-  Physical: "border-orange-700/60 bg-orange-900/30 text-orange-300",
-  Intellectual: "border-blue-700/60 bg-blue-900/30 text-blue-300",
-  Gaming: "border-violet-700/60 bg-violet-900/30 text-violet-300",
-  Outdoor: "border-emerald-700/60 bg-emerald-900/30 text-emerald-300",
-  Culinary: "border-yellow-700/60 bg-yellow-900/30 text-yellow-300",
-  Collecting: "border-slate-600/60 bg-slate-800/60 text-slate-300",
-  Making: "border-amber-700/60 bg-amber-900/30 text-amber-300",
-  Social: "border-teal-700/60 bg-teal-900/30 text-teal-300",
+  Creative: "border-purple-300 bg-purple-50 text-purple-700",
+  Music: "border-pink-300 bg-pink-50 text-pink-700",
+  Physical: "border-orange-300 bg-orange-50 text-orange-700",
+  Intellectual: "border-blue-300 bg-blue-50 text-blue-700",
+  Gaming: "border-violet-300 bg-violet-50 text-violet-700",
+  Outdoor: "border-emerald-300 bg-emerald-50 text-emerald-700",
+  Culinary: "border-yellow-300 bg-yellow-50 text-yellow-700",
+  Collecting: "border-stone-300 bg-stone-100 text-stone-600",
+  Making: "border-amber-300 bg-amber-50 text-amber-700",
+  Social: "border-teal-300 bg-teal-50 text-teal-700",
 };
 
 export default async function ProfilePage({ params }: Props) {
@@ -108,48 +108,48 @@ export default async function ProfilePage({ params }: Props) {
       {/* Profile header */}
       <div className="mb-8 flex items-start gap-5 flex-wrap">
         {/* Avatar with optional owner glow */}
-        <div className={isOwner ? "rounded-full p-0.5 bg-gradient-to-br from-emerald-400/40 via-emerald-600/20 to-transparent ring-2 ring-emerald-500/30 shadow-[0_0_18px_2px_rgba(16,185,129,0.18)]" : ""}>
+        <div className={isOwner ? "rounded-full p-0.5 bg-gradient-to-br from-emerald-400/40 via-emerald-600/20 to-transparent ring-2 ring-emerald-400/30 shadow-[0_0_18px_2px_rgba(16,185,129,0.15)]" : ""}>
           {user.image ? (
             <Image
               src={user.image}
               alt={user.name ?? "Avatar"}
               width={72}
               height={72}
-              className="rounded-full border-2 border-slate-700"
+              className="rounded-full border-2 border-stone-200"
             />
           ) : (
-            <div className="h-[72px] w-[72px] rounded-full bg-slate-800 border-2 border-slate-700 flex items-center justify-center text-2xl font-bold text-slate-400">
+            <div className="h-[72px] w-[72px] rounded-full bg-stone-100 border-2 border-stone-200 flex items-center justify-center text-2xl font-bold text-stone-500">
               {(user.name ?? username).charAt(0).toUpperCase()}
             </div>
           )}
         </div>
 
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-slate-100">
+          <h1 className="text-2xl font-bold text-stone-900">
             {user.name ?? username}
           </h1>
-          <p className="text-slate-500">@{user.username}</p>
+          <p className="text-stone-500">@{user.username}</p>
 
           {/* Stats bar */}
           <div className="mt-3 flex flex-wrap gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/70 px-3 py-1 text-xs text-slate-300">
-              <span className="text-emerald-400 font-semibold">{timelines.length}</span>
-              <span className="text-slate-500">timeline{timelines.length !== 1 ? "s" : ""}</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-700">
+              <span className="text-emerald-600 font-semibold">{timelines.length}</span>
+              <span className="text-stone-500">timeline{timelines.length !== 1 ? "s" : ""}</span>
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/70 px-3 py-1 text-xs text-slate-300">
-              <span className="text-emerald-400 font-semibold">{allHobbies.length}</span>
-              <span className="text-slate-500">unique hobbie{allHobbies.length !== 1 ? "s" : ""}</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-700">
+              <span className="text-emerald-600 font-semibold">{allHobbies.length}</span>
+              <span className="text-stone-500">unique hobbie{allHobbies.length !== 1 ? "s" : ""}</span>
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-700 bg-slate-800/70 px-3 py-1 text-xs text-slate-300">
-              <span className="text-emerald-400 font-semibold">{totalPhases}</span>
-              <span className="text-slate-500">phase{totalPhases !== 1 ? "s" : ""}</span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-700">
+              <span className="text-emerald-600 font-semibold">{totalPhases}</span>
+              <span className="text-stone-500">phase{totalPhases !== 1 ? "s" : ""}</span>
             </span>
           </div>
         </div>
 
         {isOwner && (
           <Link href="/timeline/new">
-            <Button className="bg-emerald-600 text-white hover:bg-emerald-500">
+            <Button className="bg-emerald-600 text-white hover:bg-emerald-700">
               <Plus className="mr-1.5 h-4 w-4" />
               New timeline
             </Button>
@@ -161,15 +161,15 @@ export default async function ProfilePage({ params }: Props) {
         {/* Hobby cloud */}
         {allHobbies.length > 0 && (
           <div>
-            <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-slate-500">
+            <h2 className="mb-3 text-sm font-medium uppercase tracking-wide text-stone-500">
               Hobby cloud
             </h2>
             <div className="flex flex-wrap gap-2">
               {top10Hobbies.map((hobbyName) => {
                 const cat = getCategoryForHobby(hobbyName);
                 const colorClass = cat
-                  ? (CATEGORY_BADGE_COLORS[cat.name] ?? "border-slate-700/60 bg-slate-800/60 text-slate-300")
-                  : "border-slate-700/60 bg-slate-800/60 text-slate-300";
+                  ? (CATEGORY_BADGE_COLORS[cat.name] ?? "border-stone-200 bg-stone-50 text-stone-600")
+                  : "border-stone-200 bg-stone-50 text-stone-600";
                 return (
                   <span
                     key={hobbyName}
@@ -187,7 +187,7 @@ export default async function ProfilePage({ params }: Props) {
         {/* Timelines */}
         {timelines.length > 0 ? (
           <div>
-            <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-slate-500">
+            <h2 className="mb-4 text-sm font-medium uppercase tracking-wide text-stone-500">
               Timelines
             </h2>
             <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -201,11 +201,11 @@ export default async function ProfilePage({ params }: Props) {
             </div>
           </div>
         ) : (
-          <div className="rounded-xl border border-slate-800 bg-slate-900/60 p-10 text-center">
-            <p className="text-slate-500">No public timelines yet.</p>
+          <div className="rounded-xl border border-stone-200 bg-stone-50 p-10 text-center">
+            <p className="text-stone-500">No public timelines yet.</p>
             {isOwner && (
               <Link href="/timeline/new">
-                <Button className="mt-4 bg-emerald-600 text-white hover:bg-emerald-500">
+                <Button className="mt-4 bg-emerald-600 text-white hover:bg-emerald-700">
                   Build your first timeline
                 </Button>
               </Link>

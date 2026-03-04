@@ -23,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${geist.className} min-h-screen bg-slate-950 text-slate-100`}>
+    <html lang="en">
+      <body className={`${geist.className} min-h-screen bg-amber-50 text-stone-900`}>
         <Providers>
           <Nav />
           <main>{children}</main>

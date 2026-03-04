@@ -47,14 +47,14 @@ export function HobbyInput({ hobbies, onChange }: Props) {
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder="Add hobbies (comma-separated, Enter to add)"
-          className="bg-slate-800 border-slate-700 text-sm h-8"
+          className="bg-stone-50 border-stone-300 text-sm h-8"
         />
         <Button
           type="button"
           variant="outline"
           size="sm"
           onClick={() => addHobbies(input)}
-          className="border-slate-700 h-8 shrink-0"
+          className="border-stone-300 h-8 shrink-0"
         >
           Add
         </Button>
@@ -65,12 +65,12 @@ export function HobbyInput({ hobbies, onChange }: Props) {
             <Badge
               key={hobby.name}
               variant="secondary"
-              className="bg-emerald-900/40 text-emerald-300 border border-emerald-800/60 pr-1 flex items-center gap-1 text-xs"
+              className="bg-emerald-100 text-emerald-700 border border-emerald-200 pr-1 flex items-center gap-1 text-xs"
             >
               {hobby.name}
               <button
                 onClick={() => removeHobby(hobby.name)}
-                className="hover:text-white ml-0.5"
+                className="hover:text-emerald-900 ml-0.5"
               >
                 <X className="h-3 w-3" />
               </button>
