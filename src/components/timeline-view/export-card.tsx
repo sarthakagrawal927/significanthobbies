@@ -140,7 +140,7 @@ export function ExportCard({ timeline, exportRef }: Props) {
             <span key={emoji} className="text-sm opacity-60">{emoji}</span>
           ))}
         </div>
-        <p className="text-xs text-slate-600">significanthobbies.app</p>
+        <p className="text-xs text-slate-600">significanthobbies.com</p>
       </div>
     </div>
   );
