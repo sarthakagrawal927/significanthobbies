@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 import { NavSignOut } from "./nav-sign-out";
+import { Search } from "lucide-react";
 
 export async function Nav() {
   const session = await getServerAuthSession();
@@ -50,6 +51,18 @@ export async function Nav() {
               className="text-stone-500 hover:text-stone-700"
             >
               Blog
+            </Button>
+          </Link>
+
+          {/* Search icon button */}
+          <Link href="/search">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-stone-500 hover:text-stone-700"
+              aria-label="Search"
+            >
+              <Search className="h-4 w-4" />
             </Button>
           </Link>
 

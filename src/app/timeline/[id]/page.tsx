@@ -9,6 +9,8 @@ import { PhaseSwimlane } from "~/components/timeline-view/phase-swimlane";
 import { InsightsPanel } from "~/components/timeline-view/insights-panel";
 import { ExportButton } from "~/components/timeline-view/export-button";
 import { VisibilityToggle } from "~/components/timeline-view/visibility-toggle";
+import { LikeButton } from "~/components/timeline-view/like-button";
+import { CommentsSectionWithOwn } from "~/components/timeline-view/comments-section";
 import { ArrowLeft, Pencil, User } from "lucide-react";
 import type { Phase, TimelineData, TimelineVisibility } from "~/lib/types";
 
@@ -28,14 +30,26 @@ export default async function TimelinePage({ params }: Props) {
 
   const raw = await db.timeline.findUnique({
     where: { id },
-    include: { user: { select: { id: true, name: true, username: true, image: true } } },
+    include: {
+      user: { select: { id: true, name: true, username: true, image: true } },
+      likes: { select: { userId: true } },
+      comments: {
+        select: {
+          id: true,
+          userId: true,
+          body: true,
+          createdAt: true,
+          user: { select: { name: true, username: true, image: true } },
+        },
+        orderBy: { createdAt: "asc" },
+      },
+    },
   });
 
   if (!raw) notFound();
 
   const isOwner = session?.user?.id === raw.userId;
-  const isVisible =
-    raw.visibility !== "PRIVATE" || isOwner;
+  const isVisible = raw.visibility !== "PRIVATE" || isOwner;
 
   if (!isVisible) notFound();
 
@@ -54,6 +68,24 @@ export default async function TimelinePage({ params }: Props) {
     updatedAt: raw.updatedAt,
     user: raw.user,
   };
+
+  const currentUserId = session?.user?.id ?? null;
+  const isLiked = raw.likes.some((l) => l.userId === currentUserId);
+  const likeCount = raw.likes.length;
+
+  // Which comments belong to the current user (drives delete button visibility)
+  const ownCommentIds = new Set(
+    currentUserId
+      ? raw.comments.filter((c) => c.userId === currentUserId).map((c) => c.id)
+      : [],
+  );
+
+  const comments = raw.comments.map((c) => ({
+    id: c.id,
+    body: c.body,
+    createdAt: c.createdAt,
+    user: c.user,
+  }));
 
   const breadcrumbHref = raw.user?.username ? `/u/${raw.user.username}` : "/";
   const breadcrumbLabel = raw.user?.username ? `@${raw.user.username}` : "Home";
@@ -102,6 +134,12 @@ export default async function TimelinePage({ params }: Props) {
           </div>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
+          <LikeButton
+            timelineId={timeline.id}
+            initialLiked={isLiked}
+            initialCount={likeCount}
+            isAuthenticated={!!currentUserId}
+          />
           {isOwner && (
             <VisibilityToggle
               timelineId={timeline.id}
@@ -139,6 +177,12 @@ export default async function TimelinePage({ params }: Props) {
         <div className="space-y-8">
           <PhaseSwimlane phases={phases} />
           <InsightsPanel phases={phases} />
+          <CommentsSectionWithOwn
+            timelineId={timeline.id}
+            initialComments={comments}
+            currentUserId={currentUserId}
+            ownCommentIds={ownCommentIds}
+          />
         </div>
       )}
     </div>

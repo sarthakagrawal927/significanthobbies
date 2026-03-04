@@ -1,37 +1,54 @@
-import { Button } from "~/components/ui/button";
-import Link from "next/link";
+import { db } from "~/server/db";
+import { ExploreClient } from "./explore-client";
+import type { Phase, TimelineData, TimelineVisibility } from "~/lib/types";
 
-export default function ExplorePage() {
+export const metadata = { title: "Explore — SignificantHobbies" };
+
+export default async function ExplorePage() {
+  const rawTimelines = await db.timeline.findMany({
+    where: { visibility: "PUBLIC" },
+    include: {
+      user: { select: { id: true, name: true, username: true, image: true } },
+    },
+    orderBy: { updatedAt: "desc" },
+    take: 100,
+  });
+
+  const timelines: TimelineData[] = rawTimelines.map((raw) => {
+    let phases: Phase[] = [];
+    try {
+      phases = JSON.parse(raw.phases as string) as Phase[];
+    } catch { /* ignore */ }
+    return {
+      id: raw.id,
+      title: raw.title,
+      visibility: raw.visibility as TimelineVisibility,
+      slug: raw.slug,
+      phases,
+      createdAt: raw.createdAt,
+      updatedAt: raw.updatedAt,
+      user: raw.user
+        ? {
+            id: raw.user.id,
+            name: raw.user.name,
+            username: raw.user.username,
+            image: raw.user.image,
+          }
+        : null,
+    };
+  });
+
   return (
-    <div className="flex min-h-[80vh] items-center justify-center px-4">
-      <div className="max-w-md text-center">
-        <div className="mb-6 text-6xl">📊</div>
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-300 bg-emerald-50 px-4 py-1.5 text-sm text-emerald-600">
-          Coming soon
-        </div>
-        <h1 className="mb-3 text-3xl font-bold text-stone-900">
-          Explore Trends
-        </h1>
-        <p className="mb-2 text-stone-500">
-          Discover what hobbies people pick up in their 20s, what gets dropped,
-          and what comes back decades later.
+    <div className="mx-auto max-w-5xl px-4 py-12">
+      {/* Page header */}
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-stone-900">Explore timelines</h1>
+        <p className="mt-2 text-stone-500">
+          Discover how people spend their time — across life phases, hobbies, and chapters.
         </p>
-        <p className="mb-8 text-sm text-stone-400">
-          We&apos;re building aggregate insights right now — come back soon.
-        </p>
-        <div className="flex justify-center gap-3">
-          <Link href="/timeline/new">
-            <Button className="bg-emerald-600 hover:bg-emerald-700">
-              Build your timeline
-            </Button>
-          </Link>
-          <Link href="/hobbies">
-            <Button variant="outline" className="border-stone-300 text-stone-600">
-              Browse hobbies
-            </Button>
-          </Link>
-        </div>
       </div>
+
+      <ExploreClient timelines={timelines} />
     </div>
   );
 }

@@ -1,0 +1,154 @@
+import { ImageResponse } from "next/og";
+import { db } from "~/server/db";
+import type { Phase } from "~/lib/types";
+
+export const runtime = "nodejs";
+export const size = { width: 1200, height: 630 };
+export const contentType = "image/png";
+
+export default async function OgImage({
+  params,
+}: {
+  params: Promise<{ username: string }>;
+}) {
+  const { username } = await params;
+
+  const user = await db.user.findUnique({
+    where: { username },
+    include: {
+      timelines: { where: { visibility: "PUBLIC" }, take: 3 },
+    },
+  });
+
+  if (!user) {
+    return new ImageResponse(
+      (
+        <div
+          style={{
+            background: "#FEFDF8",
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontSize: 40,
+            fontFamily: "system-ui, sans-serif",
+            color: "#78716C",
+          }}
+        >
+          User not found
+        </div>
+      ),
+      { width: 1200, height: 630 },
+    );
+  }
+
+  const allHobbies = new Set<string>();
+  for (const t of user.timelines) {
+    try {
+      const phases = JSON.parse(t.phases as string) as Phase[];
+      phases.forEach((p) => p.hobbies.forEach((h) => allHobbies.add(h.name)));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  const initial = (user.name?.[0] ?? username[0] ?? "?").toUpperCase();
+
+  return new ImageResponse(
+    (
+      <div
+        style={{
+          background:
+            "linear-gradient(135deg, #FEFDF8 0%, #ECFDF5 50%, #FFF8EE 100%)",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "system-ui, sans-serif",
+        }}
+      >
+        {/* Site label */}
+        <div
+          style={{
+            fontSize: 22,
+            color: "#059669",
+            fontWeight: 700,
+            marginBottom: 24,
+          }}
+        >
+          significanthobbies.com
+        </div>
+
+        {/* Avatar circle */}
+        <div
+          style={{
+            width: 96,
+            height: 96,
+            borderRadius: "50%",
+            background: "linear-gradient(135deg, #059669, #10b981)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "white",
+            fontSize: 40,
+            fontWeight: 800,
+            marginBottom: 24,
+          }}
+        >
+          {initial}
+        </div>
+
+        {/* Name */}
+        <div
+          style={{
+            fontSize: 52,
+            fontWeight: 800,
+            color: "#1C1917",
+            marginBottom: 8,
+          }}
+        >
+          {user.name ?? username}
+        </div>
+
+        {/* Username handle */}
+        <div
+          style={{ fontSize: 28, color: "#78716C", marginBottom: 40 }}
+        >
+          @{username}
+        </div>
+
+        {/* Stats */}
+        <div style={{ display: "flex", gap: 20 }}>
+          <div
+            style={{
+              padding: "12px 28px",
+              borderRadius: 12,
+              background: "#ECFDF5",
+              color: "#059669",
+              fontSize: 22,
+              fontWeight: 700,
+            }}
+          >
+            {user.timelines.length} timeline{user.timelines.length !== 1 ? "s" : ""}
+          </div>
+          <div
+            style={{
+              padding: "12px 28px",
+              borderRadius: 12,
+              background: "#FEF3C7",
+              color: "#D97706",
+              fontSize: 22,
+              fontWeight: 700,
+            }}
+          >
+            {allHobbies.size} hobb{allHobbies.size !== 1 ? "ies" : "y"}
+          </div>
+        </div>
+      </div>
+    ),
+    { width: 1200, height: 630 },
+  );
+}

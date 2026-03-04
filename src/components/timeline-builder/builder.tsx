@@ -25,6 +25,7 @@ import { PhaseCard } from "./phase-card";
 import { saveTimeline, updateTimeline } from "~/lib/actions/timeline";
 import type { Phase, TimelineData } from "~/lib/types";
 import { useRouter } from "next/navigation";
+import { TIMELINE_TEMPLATES, type TimelineTemplate } from "~/lib/templates";
 
 interface Props {
   existing?: TimelineData;
@@ -39,6 +40,60 @@ function makePhase(order: number): Phase {
   };
 }
 
+function templateToPhases(template: TimelineTemplate): Phase[] {
+  if (template.phases.length === 0) {
+    return [makePhase(0)];
+  }
+  return template.phases.map((tp, i) => ({
+    id: Math.random().toString(36).slice(2),
+    label: tp.label,
+    ageStart: tp.ageStart,
+    ageEnd: tp.ageEnd,
+    hobbies: tp.suggestedHobbies.map((name) => ({ name })),
+    order: i,
+  }));
+}
+
+function TemplatePicker({ onPick }: { onPick: (template: TimelineTemplate) => void }) {
+  return (
+    <div className="mx-auto max-w-2xl">
+      <div className="mb-6 text-center">
+        <h2 className="text-xl font-bold text-stone-900">Choose a starting point</h2>
+        <p className="mt-1 text-sm text-stone-500">
+          Pick a template to pre-fill phases, or start blank and build your own.
+        </p>
+      </div>
+      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+        {TIMELINE_TEMPLATES.map((template) => (
+          <button
+            key={template.id}
+            type="button"
+            onClick={() => onPick(template)}
+            className="group rounded-xl border border-stone-200 bg-white p-5 text-left transition-all hover:border-emerald-400 hover:bg-emerald-50 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2"
+          >
+            <div className="mb-3 text-3xl">{template.emoji}</div>
+            <h3 className="mb-1 text-sm font-semibold text-stone-800 group-hover:text-emerald-700 transition-colors leading-tight">
+              {template.name}
+            </h3>
+            <p className="mb-3 text-xs text-stone-500 leading-snug">
+              {template.description}
+            </p>
+            {template.phases.length > 0 ? (
+              <span className="inline-flex items-center rounded-full bg-stone-100 px-2 py-0.5 text-xs text-stone-500 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
+                {template.phases.length} phases
+              </span>
+            ) : (
+              <span className="inline-flex items-center rounded-full bg-stone-100 px-2 py-0.5 text-xs text-stone-400 group-hover:bg-emerald-100 group-hover:text-emerald-600 transition-colors">
+                empty
+              </span>
+            )}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export function TimelineBuilder({ existing }: Props) {
   const router = useRouter();
   const [title, setTitle] = useState(existing?.title ?? "");
@@ -48,6 +103,8 @@ export function TimelineBuilder({ existing }: Props) {
       : [makePhase(0)],
   );
   const [isPending, startTransition] = useTransition();
+  // Show template picker only for new timelines (no existing prop)
+  const [templatePicked, setTemplatePicked] = useState(!!existing);
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -55,6 +112,11 @@ export function TimelineBuilder({ existing }: Props) {
       coordinateGetter: sortableKeyboardCoordinates,
     }),
   );
+
+  function handlePickTemplate(template: TimelineTemplate) {
+    setPhases(templateToPhases(template));
+    setTemplatePicked(true);
+  }
 
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
@@ -112,6 +174,11 @@ export function TimelineBuilder({ existing }: Props) {
     });
   }
 
+  // Show template picker for new timelines
+  if (!templatePicked) {
+    return <TemplatePicker onPick={handlePickTemplate} />;
+  }
+
   const phasesWithHobbies = phases.filter((p) => p.hobbies.length > 0).length;
   const totalPhases = phases.length;
   const allEmpty = phasesWithHobbies === 0;
@@ -143,6 +210,15 @@ export function TimelineBuilder({ existing }: Props) {
           <span className="text-xs text-stone-400">
             Tip: Add hobbies to each phase to unlock insights
           </span>
+        )}
+        {!existing && (
+          <button
+            type="button"
+            onClick={() => setTemplatePicked(false)}
+            className="ml-auto text-xs text-stone-400 hover:text-stone-600 transition-colors"
+          >
+            Change template
+          </button>
         )}
       </div>
 

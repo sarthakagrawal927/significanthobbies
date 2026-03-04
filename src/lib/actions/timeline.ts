@@ -107,3 +107,74 @@ export async function deleteTimeline(id: string) {
   await db.timeline.delete({ where: { id } });
   revalidatePath("/timeline");
 }
+
+export async function getLikeStatus(
+  timelineId: string,
+): Promise<{ liked: boolean; count: number }> {
+  const session = await getServerSession(authOptions);
+
+  const count = await db.like.count({ where: { timelineId } });
+
+  if (!session?.user?.id) {
+    return { liked: false, count };
+  }
+
+  const existing = await db.like.findUnique({
+    where: { userId_timelineId: { userId: session.user.id, timelineId } },
+  });
+
+  return { liked: !!existing, count };
+}
+
+export async function toggleLike(
+  timelineId: string,
+): Promise<{ liked: boolean; count: number }> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  const existing = await db.like.findUnique({
+    where: { userId_timelineId: { userId: session.user.id, timelineId } },
+  });
+
+  if (existing) {
+    await db.like.delete({ where: { id: existing.id } });
+  } else {
+    await db.like.create({
+      data: { userId: session.user.id, timelineId },
+    });
+  }
+
+  const count = await db.like.count({ where: { timelineId } });
+  revalidatePath(`/timeline/${timelineId}`);
+  return { liked: !existing, count };
+}
+
+export async function addComment(timelineId: string, body: string) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  const trimmed = body.trim().slice(0, 280);
+  if (!trimmed) throw new Error("Comment body is required");
+
+  const comment = await db.comment.create({
+    data: { userId: session.user.id, timelineId, body: trimmed },
+    include: {
+      user: { select: { name: true, username: true, image: true } },
+    },
+  });
+
+  revalidatePath(`/timeline/${timelineId}`);
+  return comment;
+}
+
+export async function deleteComment(commentId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  const comment = await db.comment.findUnique({ where: { id: commentId } });
+  if (!comment || comment.userId !== session.user.id)
+    throw new Error("Not found");
+
+  await db.comment.delete({ where: { id: commentId } });
+  revalidatePath(`/timeline/${comment.timelineId}`);
+}

@@ -7,7 +7,8 @@ import { db } from "~/server/db";
 import { Button } from "~/components/ui/button";
 import { TimelineCard } from "~/components/timeline-card";
 import { SuggestionsPanel } from "~/components/suggestions-panel";
-import { Plus } from "lucide-react";
+import { FollowButton } from "~/components/follow-button";
+import { Plus, ExternalLink, Pencil } from "lucide-react";
 import type { Phase, TimelineVisibility } from "~/lib/types";
 import { getCategoryForHobby } from "~/lib/hobbies";
 
@@ -44,7 +45,15 @@ export default async function ProfilePage({ params }: Props) {
       name: true,
       username: true,
       image: true,
+      bio: true,
+      website: true,
       createdAt: true,
+      _count: {
+        select: {
+          followers: true,
+          following: true,
+        },
+      },
       timelines: {
         orderBy: { updatedAt: "desc" },
         where: { OR: [{ visibility: "PUBLIC" }, { visibility: "UNLISTED" }] },
@@ -55,6 +64,20 @@ export default async function ProfilePage({ params }: Props) {
   if (!user) notFound();
 
   const isOwner = session?.user?.id === user.id;
+
+  // Check if the current user is following this profile
+  let isFollowing = false;
+  if (session?.user?.id && !isOwner) {
+    const followRecord = await db.follow.findUnique({
+      where: {
+        followerId_followingId: {
+          followerId: session.user.id,
+          followingId: user.id,
+        },
+      },
+    });
+    isFollowing = !!followRecord;
+  }
 
   // Get owned timelines (including private) for owner
   let ownTimelines = user.timelines;
@@ -125,10 +148,41 @@ export default async function ProfilePage({ params }: Props) {
         </div>
 
         <div className="flex-1 min-w-0">
-          <h1 className="text-2xl font-bold text-stone-900">
-            {user.name ?? username}
-          </h1>
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-2xl font-bold text-stone-900">
+              {user.name ?? username}
+            </h1>
+            {isOwner && (
+              <Link
+                href="/settings"
+                className="inline-flex items-center gap-1 text-xs text-stone-400 hover:text-emerald-600 transition-colors"
+              >
+                <Pencil className="h-3 w-3" />
+                Edit profile
+              </Link>
+            )}
+          </div>
           <p className="text-stone-500">@{user.username}</p>
+
+          {/* Bio */}
+          {user.bio && (
+            <p className="mt-2 text-sm text-stone-600 italic leading-relaxed max-w-md">
+              {user.bio}
+            </p>
+          )}
+
+          {/* Website */}
+          {user.website && (
+            <a
+              href={user.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1.5 inline-flex items-center gap-1 text-xs text-emerald-600 hover:text-emerald-700 hover:underline transition-colors"
+            >
+              <ExternalLink className="h-3 w-3" />
+              {user.website.replace(/^https?:\/\//, "")}
+            </a>
+          )}
 
           {/* Stats bar */}
           <div className="mt-3 flex flex-wrap gap-2">
@@ -144,7 +198,43 @@ export default async function ProfilePage({ params }: Props) {
               <span className="text-emerald-600 font-semibold">{totalPhases}</span>
               <span className="text-stone-500">phase{totalPhases !== 1 ? "s" : ""}</span>
             </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-700">
+              <span className="text-emerald-600 font-semibold">{user._count.followers}</span>
+              <span className="text-stone-500">follower{user._count.followers !== 1 ? "s" : ""}</span>
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-stone-50 px-3 py-1 text-xs text-stone-700">
+              <span className="text-emerald-600 font-semibold">{user._count.following}</span>
+              <span className="text-stone-500">following</span>
+            </span>
           </div>
+
+          {/* Follow button (shown to non-owners) */}
+          {!isOwner && session?.user && (
+            <div className="mt-3">
+              <FollowButton
+                targetUserId={user.id}
+                initialFollowing={isFollowing}
+                initialCount={user._count.followers}
+                isOwnProfile={false}
+              />
+            </div>
+          )}
+
+          {/* Prompt unauthenticated visitors to log in to follow */}
+          {!isOwner && !session?.user && (
+            <div className="mt-3">
+              <Link
+                href="/login"
+                className="inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-emerald-700 transition-colors"
+              >
+                Follow
+              </Link>
+              <span className="ml-3 text-sm text-stone-500">
+                <span className="font-semibold text-stone-700">{user._count.followers}</span>{" "}
+                {user._count.followers === 1 ? "follower" : "followers"}
+              </span>
+            </div>
+          )}
         </div>
 
         {isOwner && (

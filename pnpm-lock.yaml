@@ -29,6 +29,9 @@ importers:
       '@prisma/client':
         specifier: ^7.4.2
         version: 7.4.2(prisma@7.4.2(@types/react@19.2.14)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)(typescript@5.9.3))(typescript@5.9.3)
+      '@saas-maker/feedback':
+        specifier: 0.2.0
+        version: 0.2.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@saas-maker/sdk':
         specifier: ^0.2.0
         version: 0.2.0
@@ -1896,6 +1899,12 @@ packages:
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
+
+  '@saas-maker/feedback@0.2.0':
+    resolution: {integrity: sha512-zr7eEHYM0UPDWYn/SPkfCMxHvIYmV4obvCpF5+fp6LDK3QwSBLPMpx3kBy3wpHSoyq0h4fORchGJMwkA+YbOUw==}
+    peerDependencies:
+      react: '>=18'
+      react-dom: '>=18'
 
   '@saas-maker/sdk@0.2.0':
     resolution: {integrity: sha512-lkb/0WGZzLuYwz6pt9i594YorORrW9FUObZxg9ell8gKz0IQA71d+bYSNgSfnQ42kU4BmKXO5UUf9lNW+O9g4g==}
@@ -6873,6 +6882,11 @@ snapshots:
     optional: true
 
   '@rtsao/scc@1.1.0': {}
+
+  '@saas-maker/feedback@0.2.0(react-dom@19.2.3(react@19.2.3))(react@19.2.3)':
+    dependencies:
+      react: 19.2.3
+      react-dom: 19.2.3(react@19.2.3)
 
   '@saas-maker/sdk@0.2.0': {}
 

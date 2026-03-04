@@ -1,6 +1,7 @@
 import "~/app/globals.css";
 
-import { type Metadata } from "next";
+import { type Metadata, type Viewport } from "next";
+import { SaaSMakerFeedback } from "~/components/saasmaker-feedback";
 import { Geist } from "next/font/google";
 import { Providers } from "~/components/providers";
 import { Nav } from "~/components/nav";
@@ -13,8 +14,31 @@ export const metadata: Metadata = {
     template: "%s | SignificantHobbies",
   },
   description:
-    "Map your hobby history across life phases. Discover insights. Find what to explore next.",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+    "Map your hobby history across life phases. Discover what rekindled, what persisted, and what to explore next.",
+  manifest: "/manifest.json",
+  icons: [{ rel: "icon", url: "/favicon.ico" }, { rel: "icon", url: "/icon.svg", type: "image/svg+xml" }],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "SignificantHobbies",
+  },
+  formatDetection: { telephone: false },
+  openGraph: {
+    type: "website",
+    siteName: "SignificantHobbies",
+    title: "SignificantHobbies — Your Hobby Journey",
+    description:
+      "Map your hobby history across life phases. Discover what rekindled, what persisted, and what to explore next.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "SignificantHobbies — Your Hobby Journey",
+    description: "Map your hobby history across life phases.",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#059669",
 };
 
 export default function RootLayout({
@@ -28,6 +52,7 @@ export default function RootLayout({
         <Providers>
           <Nav />
           <main>{children}</main>
+          <SaaSMakerFeedback />
         </Providers>
       </body>
     </html>

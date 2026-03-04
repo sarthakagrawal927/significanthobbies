@@ -45,3 +45,84 @@ export async function getMyProfile() {
     select: { id: true, name: true, username: true, image: true },
   });
 }
+
+export async function toggleFollow(
+  targetUserId: string,
+): Promise<{ following: boolean; followerCount: number }> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  const currentUserId = session.user.id;
+
+  if (currentUserId === targetUserId) {
+    throw new Error("Cannot follow yourself");
+  }
+
+  const existing = await db.follow.findUnique({
+    where: {
+      followerId_followingId: {
+        followerId: currentUserId,
+        followingId: targetUserId,
+      },
+    },
+  });
+
+  if (existing) {
+    await db.follow.delete({ where: { id: existing.id } });
+  } else {
+    await db.follow.create({
+      data: { followerId: currentUserId, followingId: targetUserId },
+    });
+  }
+
+  const followerCount = await db.follow.count({
+    where: { followingId: targetUserId },
+  });
+
+  // Revalidate the target user's profile page
+  const targetUser = await db.user.findUnique({
+    where: { id: targetUserId },
+    select: { username: true },
+  });
+  if (targetUser?.username) {
+    revalidatePath(`/u/${targetUser.username}`);
+  }
+
+  return { following: !existing, followerCount };
+}
+
+export async function updateProfile(data: {
+  bio?: string;
+  website?: string;
+  name?: string;
+}): Promise<void> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  // Validate website format if provided
+  if (data.website && data.website.trim() !== "") {
+    if (!/^https?:\/\/.+/.test(data.website.trim())) {
+      throw new Error("Website must start with http:// or https://");
+    }
+  }
+
+  await db.user.update({
+    where: { id: session.user.id },
+    data: {
+      ...(data.name !== undefined ? { name: data.name } : {}),
+      ...(data.bio !== undefined ? { bio: data.bio } : {}),
+      ...(data.website !== undefined
+        ? { website: data.website.trim() || null }
+        : {}),
+    },
+  });
+
+  const user = await db.user.findUnique({
+    where: { id: session.user.id },
+    select: { username: true },
+  });
+  if (user?.username) {
+    revalidatePath(`/u/${user.username}`);
+  }
+  revalidatePath("/settings");
+}

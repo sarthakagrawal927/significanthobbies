@@ -1,11 +1,12 @@
 import Link from "next/link";
 import { Badge } from "~/components/ui/badge";
-import { Lock, Globe, Link as LinkIcon } from "lucide-react";
+import { Lock, Globe, Link as LinkIcon, Heart } from "lucide-react";
 import type { TimelineData } from "~/lib/types";
 
 interface Props {
   timeline: TimelineData;
   showVisibility?: boolean;
+  likeCount?: number;
 }
 
 const VISIBILITY_ICONS = {
@@ -14,7 +15,7 @@ const VISIBILITY_ICONS = {
   PUBLIC: Globe,
 };
 
-export function TimelineCard({ timeline, showVisibility = false }: Props) {
+export function TimelineCard({ timeline, showVisibility = false, likeCount }: Props) {
   const { phases } = timeline;
   const totalHobbies = new Set(
     phases.flatMap((p) => p.hobbies.map((h) => h.name.toLowerCase())),
@@ -57,9 +58,17 @@ export function TimelineCard({ timeline, showVisibility = false }: Props) {
         </div>
 
         {/* Stats */}
-        <p className="text-xs text-stone-400">
-          {phases.length} phases · {totalHobbies} hobbies
-        </p>
+        <div className="flex items-center justify-between">
+          <p className="text-xs text-stone-400">
+            {phases.length} phases · {totalHobbies} hobbies
+          </p>
+          {likeCount !== undefined && likeCount > 0 && (
+            <span className="inline-flex items-center gap-1 text-xs text-rose-400">
+              <Heart className="h-3 w-3 fill-rose-400" />
+              {likeCount}
+            </span>
+          )}
+        </div>
       </div>
     </Link>
   );
