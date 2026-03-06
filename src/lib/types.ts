@@ -17,12 +17,22 @@ export type Phase = {
 
 export type TimelineVisibility = "PRIVATE" | "UNLISTED" | "PUBLIC";
 
+export type TimelinePin = {
+  id: string;
+  label: string;
+  emoji: string;
+  date: string;        // "2026-03" month-level
+  questId?: string;
+  relatedHobby?: string;
+};
+
 export type TimelineData = {
   id: string;
   title: string | null;
   visibility: TimelineVisibility;
   slug: string | null;
   phases: Phase[];
+  pins: TimelinePin[];
   createdAt: Date;
   updatedAt: Date;
   user?: {

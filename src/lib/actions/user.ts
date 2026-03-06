@@ -126,3 +126,33 @@ export async function updateProfile(data: {
   }
   revalidatePath("/settings");
 }
+
+export async function syncQuestProgress(completedQuests: string[], earnedBadges: string[]) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  await db.user.update({
+    where: { id: session.user.id },
+    data: {
+      completedQuests: JSON.stringify(completedQuests),
+      earnedBadges: JSON.stringify(earnedBadges),
+    },
+  });
+}
+
+export async function getQuestProgress(): Promise<{ completedQuests: string[]; earnedBadges: string[] }> {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) return { completedQuests: [], earnedBadges: [] };
+
+  const user = await db.user.findUnique({
+    where: { id: session.user.id },
+    select: { completedQuests: true, earnedBadges: true },
+  });
+
+  if (!user) return { completedQuests: [], earnedBadges: [] };
+
+  return {
+    completedQuests: JSON.parse(user.completedQuests as string) as string[],
+    earnedBadges: JSON.parse(user.earnedBadges as string) as string[],
+  };
+}

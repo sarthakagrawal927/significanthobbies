@@ -6,7 +6,7 @@ import { db } from "~/server/db";
 import { revalidatePath } from "next/cache";
 import { nanoid } from "nanoid";
 import { z } from "zod";
-import type { Phase, TimelineVisibility } from "~/lib/types";
+import type { Phase, TimelineVisibility, TimelinePin } from "~/lib/types";
 
 const HobbySchema = z.object({
   name: z.string().min(1).max(100),
@@ -177,4 +177,50 @@ export async function deleteComment(commentId: string) {
 
   await db.comment.delete({ where: { id: commentId } });
   revalidatePath(`/timeline/${comment.timelineId}`);
+}
+
+const PinSchema = z.object({
+  id: z.string(),
+  label: z.string().min(1).max(200),
+  emoji: z.string().max(10),
+  date: z.string().regex(/^\d{4}-\d{2}$/),
+  questId: z.string().optional(),
+  relatedHobby: z.string().max(100).optional(),
+});
+
+export async function addPin(timelineId: string, pin: TimelinePin) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  const timeline = await db.timeline.findUnique({ where: { id: timelineId } });
+  if (!timeline || timeline.userId !== session.user.id) throw new Error("Not found");
+
+  const parsed = PinSchema.parse(pin);
+  let pins: TimelinePin[] = [];
+  try { pins = JSON.parse(timeline.pins as string); } catch { /* ignore */ }
+  pins.push(parsed as TimelinePin);
+
+  await db.timeline.update({
+    where: { id: timelineId },
+    data: { pins: JSON.stringify(pins) },
+  });
+  revalidatePath(`/timeline/${timelineId}`);
+}
+
+export async function removePin(timelineId: string, pinId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.id) throw new Error("Not authenticated");
+
+  const timeline = await db.timeline.findUnique({ where: { id: timelineId } });
+  if (!timeline || timeline.userId !== session.user.id) throw new Error("Not found");
+
+  let pins: TimelinePin[] = [];
+  try { pins = JSON.parse(timeline.pins as string); } catch { /* ignore */ }
+  pins = pins.filter((p) => p.id !== pinId);
+
+  await db.timeline.update({
+    where: { id: timelineId },
+    data: { pins: JSON.stringify(pins) },
+  });
+  revalidatePath(`/timeline/${timelineId}`);
 }
