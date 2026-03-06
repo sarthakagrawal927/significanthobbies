@@ -1,14 +1,15 @@
 import { Badge } from "~/components/ui/badge";
 import { getCategoryForHobby } from "~/lib/hobbies";
-import type { Phase } from "~/lib/types";
+import type { Phase, TimelinePin } from "~/lib/types";
 
 interface Props {
   phases: Phase[];
+  pins?: TimelinePin[];
 }
 
 const INTENSITY_LABELS = ["", "Trying", "Casual", "Regular", "Passionate", "Core"];
 
-export function PhaseSwimlane({ phases }: Props) {
+export function PhaseSwimlane({ phases, pins = [] }: Props) {
   if (!phases.length) return null;
 
   return (
@@ -95,6 +96,36 @@ export function PhaseSwimlane({ phases }: Props) {
           );
         })}
       </div>
+
+      {pins.length > 0 && (
+        <div className="mt-4">
+          <div className="mb-2 flex items-center gap-2">
+            <div className="h-px flex-1 bg-stone-200" />
+            <span className="text-xs font-medium uppercase tracking-wide text-stone-400">
+              Pins
+            </span>
+            <div className="h-px flex-1 bg-stone-200" />
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {pins.map((pin) => (
+              <div
+                key={pin.id}
+                className="group inline-flex items-center gap-1.5 rounded-full border border-stone-200 bg-white px-3 py-1.5 text-xs shadow-sm transition-all hover:border-emerald-300 hover:shadow-md"
+                title={pin.relatedHobby ? `${pin.label} → ${pin.relatedHobby}` : pin.label}
+              >
+                <span className="text-sm">{pin.emoji}</span>
+                <span className="font-medium text-stone-700">{pin.label}</span>
+                <span className="text-stone-400">{pin.date}</span>
+                {pin.relatedHobby && (
+                  <span className="rounded-full bg-emerald-50 px-1.5 py-0.5 text-[10px] font-medium text-emerald-600">
+                    {pin.relatedHobby}
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

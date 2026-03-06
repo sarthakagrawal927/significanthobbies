@@ -12,7 +12,7 @@ import { VisibilityToggle } from "~/components/timeline-view/visibility-toggle";
 import { LikeButton } from "~/components/timeline-view/like-button";
 import { CommentsSectionWithOwn } from "~/components/timeline-view/comments-section";
 import { ArrowLeft, Pencil, User } from "lucide-react";
-import type { Phase, TimelineData, TimelineVisibility } from "~/lib/types";
+import type { Phase, TimelineData, TimelinePin, TimelineVisibility } from "~/lib/types";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -58,12 +58,16 @@ export default async function TimelinePage({ params }: Props) {
     phases = JSON.parse(raw.phases as string) as Phase[];
   } catch { /* ignore */ }
 
+  let pins: TimelinePin[] = [];
+  try { pins = JSON.parse(raw.pins as string) as TimelinePin[]; } catch { /* ignore */ }
+
   const timeline: TimelineData = {
     id: raw.id,
     title: raw.title,
     visibility: raw.visibility as TimelineVisibility,
     slug: raw.slug,
     phases,
+    pins,
     createdAt: raw.createdAt,
     updatedAt: raw.updatedAt,
     user: raw.user,
@@ -175,7 +179,7 @@ export default async function TimelinePage({ params }: Props) {
         </div>
       ) : (
         <div className="space-y-8">
-          <PhaseSwimlane phases={phases} />
+          <PhaseSwimlane phases={phases} pins={pins} />
           <InsightsPanel phases={phases} />
           <CommentsSectionWithOwn
             timelineId={timeline.id}
