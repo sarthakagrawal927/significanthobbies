@@ -19,6 +19,158 @@ export type BlogPost = {
 
 export const blogPosts: BlogPost[] = [
   {
+    slug: "side-quests",
+    title: "You're Bored Because You're Not Doing Side Quests",
+    excerpt:
+      "Life is more than working and throwing yourself into bed. Here's why treating hobbies as side quests changes everything — and how to start yours today.",
+    category: "Inspiration",
+    emoji: "⚔️",
+    readTime: 5,
+    publishedAt: "March 2026",
+    content: [
+      {
+        type: "paragraph",
+        text: "A few months ago, someone posted a tweet that said, simply, \"You're bored because you're not doing side quests.\" Below it was a list — fifty things like \"watch a sunset alone,\" \"learn to pick a lock,\" \"write a letter to your future self,\" \"cook a meal from a country you've never been to.\" The tweet got 552,000 views. It was screenshotted, reposted, saved to bookmarks folders, sent in group chats. Half a million people looked at a list of small, unserious things and thought: yes. That's what's missing.",
+      },
+      {
+        type: "paragraph",
+        text: "What made the tweet resonate wasn't the specific items on the list. It was the word \"side quest.\" That single reframe took the concept of a hobby — something adults have turned into yet another performance metric, another thing to optimize or feel guilty about neglecting — and made it feel like what it should have been all along: an adventure. Low-stakes, freely chosen, undertaken not because it advances some five-year plan but because the world is interesting and you are alive in it.",
+      },
+      {
+        type: "heading",
+        text: "Life as an RPG",
+        level: 2,
+      },
+      {
+        type: "paragraph",
+        text: "In every role-playing game, there is a main quest — the central storyline that propels you forward, the thing the game is ostensibly about. Defeat the villain. Save the kingdom. Deliver the package. In life, the main quests are obvious: build a career, pay the mortgage, maintain relationships, keep yourself fed and housed and reasonably healthy. These are essential. No one is arguing otherwise.",
+      },
+      {
+        type: "paragraph",
+        text: "But anyone who has played an RPG knows that the players who only follow the main quest have the shallowest experience. They finish the game having seen a fraction of the world. The richest playthroughs belong to the people who wander — who take the unmarked path, talk to the stranger in the tavern, accept the weird errand that seems to lead nowhere. The side quests are where the texture is. They're where you discover hidden abilities, unexpected allies, entire storylines the main quest never mentioned.",
+      },
+      {
+        type: "paragraph",
+        text: "Life works the same way. The person whose entire existence is structured around career and domestic logistics is completing the main quest. They may complete it well. But they are also, in a very real sense, leaving most of the map unexplored. The side quests — learning to forage, taking a ceramics class, building a go-kart, memorizing constellations — are where character development actually happens. They are where you find out what you're made of when nothing is required of you.",
+      },
+      {
+        type: "heading",
+        text: "Why Side Quests Work Better Than Goals",
+        level: 2,
+      },
+      {
+        type: "paragraph",
+        text: "There is something quietly tyrannical about the way we talk about hobbies as adults. \"I should learn guitar.\" \"I really need to get back into running.\" \"I want to be the kind of person who paints.\" The language of should and want to be betrays the problem: we've turned leisure into aspiration, and aspiration into obligation. The hobby becomes another item on the to-do list, another domain in which you can fail to meet your own expectations.",
+      },
+      {
+        type: "paragraph",
+        text: "Side quests dissolve this entirely. \"Learn one song on any instrument\" is not the same psychological object as \"learn guitar.\" The first is a contained experiment with a clear endpoint. The second is an identity commitment that carries the weight of all future practice sessions you might skip. The side quest framing removes the performance pressure because it was never about performance in the first place. You're not committing to becoming a musician. You're seeing what happens when you try a thing.",
+      },
+      {
+        type: "paragraph",
+        text: "The original thread captured this beautifully. The quests weren't grand — \"go to a restaurant alone,\" \"learn five words in sign language,\" \"stargaze for thirty minutes.\" They were experiments in paying attention. Each one a small door you could open or not, with nothing on the other side except the experience itself.",
+      },
+      {
+        type: "callout",
+        text: "A side quest has no failure condition. You either do it or you don't. There's no being bad at watching a sunset.",
+        emoji: "🎯",
+      },
+      {
+        type: "heading",
+        text: "The Six Realms of Side Quests",
+        level: 2,
+      },
+      {
+        type: "paragraph",
+        text: "If the concept appeals to you but the blank page of \"what should I try\" feels paralyzing, it helps to think in categories. Side quests tend to cluster into six realms, each developing a different part of who you are.",
+      },
+      {
+        type: "heading",
+        text: "Sensory Quests",
+        level: 3,
+      },
+      {
+        type: "paragraph",
+        text: "These reconnect you with your physical senses — the parts of experience that screen-based life has slowly numbed. Walk barefoot in grass. Swim in open water. Sit in complete darkness for ten minutes. Listen to an entire album with your eyes closed. Sensory quests develop presence. They teach you to actually be in the place your body already is.",
+      },
+      {
+        type: "heading",
+        text: "Creative Quests",
+        level: 3,
+      },
+      {
+        type: "paragraph",
+        text: "These involve making something that didn't exist before, however small. Write a haiku. Sketch the view from your window. Build something out of cardboard. Record a voice memo of a story you remember from childhood. Creative quests develop self-expression. They remind you that you are a producer of things, not merely a consumer.",
+      },
+      {
+        type: "heading",
+        text: "Culinary Quests",
+        level: 3,
+      },
+      {
+        type: "paragraph",
+        text: "Food is one of the most accessible adventure domains available. Cook a dish from a cuisine you've never attempted. Bake bread from scratch. Grow a single herb and use it in a meal. Eat at a restaurant where you can't read the menu. Culinary quests develop curiosity and patience, and they have the added advantage of feeding you at the end.",
+      },
+      {
+        type: "heading",
+        text: "Social Quests",
+        level: 3,
+      },
+      {
+        type: "paragraph",
+        text: "These push gently against the social routines that can calcify in adult life. Have a conversation with a stranger. Write a handwritten letter. Host a dinner for people who don't know each other. Attend a community event alone. Social quests develop courage and connection. They crack open the closed circuit of your existing relationships just enough to let something new in.",
+      },
+      {
+        type: "heading",
+        text: "Exploration Quests",
+        level: 3,
+      },
+      {
+        type: "paragraph",
+        text: "These are about going somewhere — physically or intellectually — that you haven't been. Visit a neighborhood in your city you've never walked through. Read a book in a genre you'd normally ignore. Attend a worship service for a faith that isn't yours. Learn the basics of a skill completely unrelated to your work. Exploration quests develop range. They make you a more interesting, more empathetic, more complete person.",
+      },
+      {
+        type: "heading",
+        text: "Mindful Quests",
+        level: 3,
+      },
+      {
+        type: "paragraph",
+        text: "These slow you down on purpose. Watch a sunrise without your phone. Sit in a park and sketch what you notice. Journal for ten minutes about something you're grateful for. Take a walk with no destination and no podcast. Mindful quests develop stillness — the capacity to be with yourself without reaching for stimulation. In an attention economy, this might be the most radical skill of all.",
+      },
+      {
+        type: "heading",
+        text: "From Side Quest to Life Thread",
+        level: 2,
+      },
+      {
+        type: "paragraph",
+        text: "The beautiful thing about side quests is that some of them stick. You try calligraphy for an afternoon because it was on the list, and something clicks — the slow rhythm of the pen, the meditative focus, the satisfaction of a well-formed letter. So you try it again the next week. And then you buy a proper pen. And then you start watching tutorials. And three years later, you're a calligrapher. Not because you set out to be one, but because a small experiment revealed something that was already in you.",
+      },
+      {
+        type: "paragraph",
+        text: "This is how hobbies actually start — not with grand declarations or expensive equipment or carefully researched \"best beginner\" guides. They start with someone trying a thing on a whim and noticing that the thing made them feel more alive. The side quest is the entry point. The low stakes are the point. If you had to commit to calligraphy as an identity before picking up the pen, most people never would.",
+      },
+      {
+        type: "paragraph",
+        text: "This is exactly what SignificantHobbies is about — mapping the journey from first spark to sustained passion. Every hobby in your timeline started as someone's side quest. The guitar phase that defined your twenties began the afternoon a friend let you hold theirs. The running habit that carried you through a hard year started with a single jog around the block. When you look at your hobby history, what you're really seeing is a record of experiments that worked — side quests that became life threads.",
+      },
+      {
+        type: "heading",
+        text: "Start Your First Quest",
+        level: 2,
+      },
+      {
+        type: "paragraph",
+        text: "You don't need a plan. You don't need gear. You don't even need to know what you're looking for. You just need to pick one small, interesting thing and do it — not to become someone new, but to find out what happens when you say yes to something that doesn't matter. Because the things that don't matter have a way of becoming the things that matter most.",
+      },
+      {
+        type: "paragraph",
+        text: "We've built a Side Quest Generator with 50 quests across all six realms. Roll a random quest, get one matched to your vibe, or take on the full quest board and earn badges along the way. Try the Side Quest Generator →",
+      },
+    ],
+  },
+  {
     slug: "why-hobbies-matter",
     title: "Why Your Hobbies Matter More Than You Think",
     excerpt:

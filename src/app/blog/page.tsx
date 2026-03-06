@@ -13,6 +13,7 @@ const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string
   "Getting Started": { bg: "bg-amber-50", text: "text-amber-700", border: "border-amber-200" },
   Psychology: { bg: "bg-violet-50", text: "text-violet-700", border: "border-violet-200" },
   Reflection: { bg: "bg-blue-50", text: "text-blue-700", border: "border-blue-200" },
+  Inspiration: { bg: "bg-orange-50", text: "text-orange-700", border: "border-orange-200" },
 };
 
 function categoryStyle(category: string) {
