@@ -8,6 +8,7 @@ import { Button } from "~/components/ui/button";
 import { TimelineCard } from "~/components/timeline-card";
 import { SuggestionsPanel } from "~/components/suggestions-panel";
 import { FollowButton } from "~/components/follow-button";
+import { BadgeCollection } from "~/components/badge-collection";
 import { Plus, ExternalLink, Pencil } from "lucide-react";
 import type { Phase, TimelineVisibility } from "~/lib/types";
 import { getCategoryForHobby } from "~/lib/hobbies";
@@ -48,6 +49,7 @@ export default async function ProfilePage({ params }: Props) {
       bio: true,
       website: true,
       createdAt: true,
+      earnedBadges: true,
       _count: {
         select: {
           followers: true,
@@ -64,6 +66,10 @@ export default async function ProfilePage({ params }: Props) {
   if (!user) notFound();
 
   const isOwner = session?.user?.id === user.id;
+
+  // Parse earned badges
+  let earnedBadgeIds: string[] = [];
+  try { earnedBadgeIds = JSON.parse(user.earnedBadges as string) as string[]; } catch { /* ignore */ }
 
   // Check if the current user is following this profile
   let isFollowing = false;
@@ -271,6 +277,18 @@ export default async function ProfilePage({ params }: Props) {
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* Badge collection */}
+        {(earnedBadgeIds.length > 0 || isOwner) && (
+          <div className="scroll-reveal scroll-reveal-d1">
+            <BadgeCollection earnedBadgeIds={earnedBadgeIds} />
+            {isOwner && earnedBadgeIds.length === 0 && (
+              <p className="mt-2 text-xs text-stone-400">
+                Complete <a href="/side-quests" className="text-emerald-600 hover:underline">side quests</a> to earn badges!
+              </p>
+            )}
           </div>
         )}
 
