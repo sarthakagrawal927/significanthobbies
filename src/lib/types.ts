@@ -32,7 +32,7 @@ export type TimelineData = {
   visibility: TimelineVisibility;
   slug: string | null;
   phases: Phase[];
-  pins: TimelinePin[];
+  pins?: TimelinePin[];
   createdAt: Date;
   updatedAt: Date;
   user?: {
