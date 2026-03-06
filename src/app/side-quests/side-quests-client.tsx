@@ -338,7 +338,9 @@ function SideQuestsInner() {
   } = useQuestProgress();
 
   const [activeTab, setActiveTab] = useState<Tab>("random");
-  const [currentQuest, setCurrentQuest] = useState<SideQuest | null>(null);
+  const [currentQuest, setCurrentQuest] = useState<SideQuest | null>(
+    () => SIDE_QUESTS[0] ?? null,
+  );
   const [isShuffling, setIsShuffling] = useState(false);
 
   // Help Me Pick filters
@@ -471,21 +473,21 @@ function SideQuestsInner() {
         </div>
 
         <div className="relative mx-auto max-w-5xl text-center">
-          <div className="scroll-reveal mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-700">
+          <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-emerald-700">
             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
             Side Quests
           </div>
 
-          <h1 className="scroll-reveal scroll-reveal-d1 mb-4 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl md:text-6xl">
+          <h1 className="mb-4 text-4xl font-bold tracking-tight text-stone-900 sm:text-5xl md:text-6xl">
             50 Quests to Make Life Interesting
           </h1>
 
-          <p className="scroll-reveal scroll-reveal-d2 mx-auto max-w-xl text-lg text-stone-500 sm:text-xl">
+          <p className="mx-auto max-w-xl text-lg text-stone-500 sm:text-xl">
             Roll a random quest, get a personalized pick, or take on the full
             board.
           </p>
 
-          <div className="scroll-reveal scroll-reveal-d3 mt-8 flex justify-center gap-1.5">
+          <div className="mt-8 flex justify-center gap-1.5">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
