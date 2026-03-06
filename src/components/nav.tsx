@@ -44,6 +44,15 @@ export async function Nav() {
               Explore
             </Button>
           </Link>
+          <Link href="/side-quests">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-stone-500 hover:text-stone-700"
+            >
+              Side Quests
+            </Button>
+          </Link>
           <Link href="/blog">
             <Button
               variant="ghost"
